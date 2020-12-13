@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="75189c07-eedc-4f6e-a92c-95c2887109f9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/a3s_simulator_engine/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/a3s_simulator_engine/a3s_grpc_api.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/a3s_simulator_engine/a3s_server.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/a3s_simulator_engine/logrus_logger.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/a3s_simulator_engine/main/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common_config/common_config.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc_api/a3s_grpc_api/a3s_grpc_api.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/authorizationPoW.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/authorizationPoW.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/a3s_simulator_engine/a3s_grpc_api.go" beforeDir="false" afterPath="$PROJECT_DIR$/a3s_simulator_engine/a3s_grpc_api.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/a3s_simulator_engine/a3s_server.go" beforeDir="false" afterPath="$PROJECT_DIR$/a3s_simulator_engine/a3s_server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/a3s_simulator_engine/logrus_logger.go" beforeDir="false" afterPath="$PROJECT_DIR$/a3s_simulator_engine/logrus_logger.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/a3s_simulator_engine/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/a3s_simulator_engine/main/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +50,10 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="A3S Memory Cache soon finsihed" />
+    <option name="LAST_COMMIT_MESSAGE" value="A3S Memory Cache soon finsihed" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	a3s_simulator_engine.BackendServer_main()
+	a3s_simulator_engine.BackendServerMain()
 }

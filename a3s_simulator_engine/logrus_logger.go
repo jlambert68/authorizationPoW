@@ -10,7 +10,7 @@ import (
 
 /****************************************************/
 //  Set up logging specified in common config file
-func (a3SServerObject *A3SServerObject_struct) InitLogger(filename string) {
+func (a3SServerObject *A3SServerObjectStruct) InitLogger(filename string) {
 	a3SServerObject.logger = logrus.StandardLogger()
 
 	switch common_config.LoggingLevel {
