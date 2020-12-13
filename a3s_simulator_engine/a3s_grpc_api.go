@@ -5,7 +5,6 @@ import (
 	"github.com/patrickmn/go-cache"
 	"github.com/sirupsen/logrus"
 	"jlambert/authorizationPoW/grpc_api/a3s_grpc_api"
-	"os"
 )
 
 /***********************************************************************/
@@ -60,18 +59,20 @@ func (a3s_GrpcServer *A3S_GrpcServerStruct) GetUserAggregatedSignature(ctx conte
 	// Get Users Aggregated Key from Memory Cache
 	agggregatedSignature, agggregatedSignatureWasFound := databaseMemoryCache.Get(getUserAggregatedSignatureRequest.UserId)
 	if agggregatedSignatureWasFound {
+		agggregatedSignatureAsString := agggregatedSignature.(string)
+
 		a3SServerObject.logger.WithFields(logrus.Fields{
 			"id": "c9fa971d-a944-4f1f-9904-a1c1998393fd",
 			"getUserAggregatedSignatureRequest.UserId": getUserAggregatedSignatureRequest.UserId,
-			"agggregatedSignature":                     agggregatedSignature,
+			"agggregatedSignature":                     agggregatedSignatureAsString,
 		}).Debug("Users Aggregated Signature was found in Memory Cache")
 
 		// Create return message when user was found
 		returnMessage = &a3s_grpc_api.GetUserAggregatedSignatureResponse{
 			UserId:                  getUserAggregatedSignatureRequest.UserId,
-			UserAggregatedSignature: "",
+			UserAggregatedSignature: agggregatedSignatureAsString,
 			Acknack:                 false,
-			Comments:                "Users Aggregated Signature couldn't be found in Memory Cache",
+			Comments:                "Users Aggregated Signature found in Memory Cache",
 		}
 
 	} else {
@@ -129,7 +130,9 @@ func (a3s_GrpcServer *A3S_GrpcServerStruct) ShutDownA3SServer(ctx context.Contex
 	}).Debug("Leaveing 'ShutDownA3SServer'")
 
 	// Start shut shutdown after leaving this method
-	defer os.Exit(0)
+	defer func() {
+		doControlledExitOfProgramChannel <- true
+	}()
 
 	return returnMessage, nil
 }

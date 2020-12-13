@@ -1,7 +1,6 @@
 package a3s_simulator_engine
 
 import (
-	"fmt"
 	"github.com/patrickmn/go-cache"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
@@ -49,6 +48,10 @@ var (
 var databaseMemoryCache *cache.Cache
 
 /****************************************************/
+// channel for doing a controlled exit from the program
+var doControlledExitOfProgramChannel chan bool
+
+/****************************************************/
 // Used for only process cleanup once
 var cleanupProcessed bool = false
 
@@ -77,8 +80,6 @@ func BackendServerMain() {
 
 	// Set up A3S-Object
 	a3SServerObject = &A3SServerObjectStruct{}
-
-	// Init logger
 	a3SServerObject.InitLogger("")
 
 	// Clean up when leaving. Is placed after logger because shutdown logs information
@@ -96,11 +97,11 @@ func BackendServerMain() {
 		os.Exit(0)
 	}()
 
+	// Channel receives data from gRPC-api when to end program in a controlled way
+	doControlledExitOfProgramChannel = make(chan bool, 1)
 	// Write message in terminal to show that process is alive
-	for {
-		fmt.Println("sleeping...for another 5 minutes")
-		time.Sleep(300 * time.Second) // or runtime.Gosched() or similar per @misterbee
-	}
+	<-doControlledExitOfProgramChannel
+
 }
 
 // Set up and start Backend gRPC-server
@@ -117,7 +118,7 @@ func (a3SServerObject *A3SServerObjectStruct) InitGrpcServer() {
 		"Id":                             "ca3593b1-466b-4536-be91-5e038de178f4",
 		"common_config.A3SServer_port: ": common_config.A3SServer_port,
 	}).Debug("Start listening on:")
-	lis, err = net.Listen("tcp", ":"+common_config.A3SServer_port)
+	lis, err = net.Listen("tcp", common_config.A3SServer_port)
 
 	if err != nil {
 		a3SServerObject.logger.WithFields(logrus.Fields{
@@ -132,7 +133,7 @@ func (a3SServerObject *A3SServerObjectStruct) InitGrpcServer() {
 
 	}
 
-	// Creates a new RegisterWorkerServer gRPC server
+	// Creates a new and start a3sGrpcServer
 	go func() {
 		a3SServerObject.logger.WithFields(logrus.Fields{
 			"Id": "b0ccffb5-4367-464c-a3bc-460cafed16cb",
@@ -140,11 +141,20 @@ func (a3SServerObject *A3SServerObjectStruct) InitGrpcServer() {
 		a3sGrpcServer = grpc.NewServer()
 		a3s_grpc_api.RegisterA3SGrpcServiceServer(a3sGrpcServer, &A3S_GrpcServerStruct{})
 
-		a3SServerObject.logger.WithFields(logrus.Fields{
-			"Id":                           "e843ece9-b707-4c60-b1d8-14464305e68f",
-			"localServerEngineLocalPort: ": common_config.A3SServer_port,
-		}).Info("registerTestInstructionBackendServer for TestInstruction Backend Server started")
-		a3sGrpcServer.Serve(lis)
+		err = a3sGrpcServer.Serve(lis)
+		if err != nil {
+			a3SServerObject.logger.WithFields(logrus.Fields{
+				"Id":    "2a5bf98b-e4ab-434c-9079-c1656b86bbbd",
+				"err: ": err,
+			}).Panic("Couldn't start 'a3sGrpcServer'")
+
+		} else {
+			a3SServerObject.logger.WithFields(logrus.Fields{
+				"Id":                           "e843ece9-b707-4c60-b1d8-14464305e68f",
+				"localServerEngineLocalPort: ": common_config.A3SServer_port,
+			}).Info("registerTestInstructionBackendServer for TestInstruction Backend Server started")
+
+		}
 	}()
 
 }

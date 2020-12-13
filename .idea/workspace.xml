@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="75189c07-eedc-4f6e-a92c-95c2887109f9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/a3s_simulator_engine/a3s_grpc_api.go" beforeDir="false" afterPath="$PROJECT_DIR$/a3s_simulator_engine/a3s_grpc_api.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/a3s_simulator_engine/a3s_server.go" beforeDir="false" afterPath="$PROJECT_DIR$/a3s_simulator_engine/a3s_server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/a3s_simulator_engine/logrus_logger.go" beforeDir="false" afterPath="$PROJECT_DIR$/a3s_simulator_engine/logrus_logger.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/a3s_simulator_engine/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/a3s_simulator_engine/main/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,13 +46,30 @@
       <recent name="$PROJECT_DIR$/common_code" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="authorizationPoW" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/a3s_simulator_engine/main/main.go" />
+      <package value="jlambert/authorizationPoW" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build main.go" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="A3S Memory Cache soon finsihed" />
-    <option name="LAST_COMMIT_MESSAGE" value="A3S Memory Cache soon finsihed" />
+    <MESSAGE value="A3S gRPC server seems to be finsihed" />
+    <option name="LAST_COMMIT_MESSAGE" value="A3S gRPC server seems to be finsihed" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
