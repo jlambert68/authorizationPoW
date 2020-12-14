@@ -105,152 +105,104 @@ func (m *AckNackResponse) GetComments() string {
 	return ""
 }
 
-// Request message when updating a users authorization signature
-type UpdateUserAggregatedSignatureRequest struct {
-	UserId                  string   `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
-	UserAggregatedSignature string   `protobuf:"bytes,2,opt,name=userAggregatedSignature,proto3" json:"userAggregatedSignature,omitempty"`
-	XXX_NoUnkeyedLiteral    struct{} `json:"-"`
-	XXX_unrecognized        []byte   `json:"-"`
-	XXX_sizecache           int32    `json:"-"`
-}
-
-func (m *UpdateUserAggregatedSignatureRequest) Reset()         { *m = UpdateUserAggregatedSignatureRequest{} }
-func (m *UpdateUserAggregatedSignatureRequest) String() string { return proto.CompactTextString(m) }
-func (*UpdateUserAggregatedSignatureRequest) ProtoMessage()    {}
-func (*UpdateUserAggregatedSignatureRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_d2bf9140ba153fb4, []int{2}
-}
-
-func (m *UpdateUserAggregatedSignatureRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_UpdateUserAggregatedSignatureRequest.Unmarshal(m, b)
-}
-func (m *UpdateUserAggregatedSignatureRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_UpdateUserAggregatedSignatureRequest.Marshal(b, m, deterministic)
-}
-func (m *UpdateUserAggregatedSignatureRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateUserAggregatedSignatureRequest.Merge(m, src)
-}
-func (m *UpdateUserAggregatedSignatureRequest) XXX_Size() int {
-	return xxx_messageInfo_UpdateUserAggregatedSignatureRequest.Size(m)
-}
-func (m *UpdateUserAggregatedSignatureRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpdateUserAggregatedSignatureRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_UpdateUserAggregatedSignatureRequest proto.InternalMessageInfo
-
-func (m *UpdateUserAggregatedSignatureRequest) GetUserId() string {
-	if m != nil {
-		return m.UserId
-	}
-	return ""
-}
-
-func (m *UpdateUserAggregatedSignatureRequest) GetUserAggregatedSignature() string {
-	if m != nil {
-		return m.UserAggregatedSignature
-	}
-	return ""
-}
-
-// Request message when reading a users authorization signature
-type GetUserAggregatedSignatureRequest struct {
+// Request message when to create the secret message used when signing
+type GenerateSecretFromInputRequest struct {
 	UserId               string   `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	MessageUsedForSecret string   `protobuf:"bytes,2,opt,name=messageUsedForSecret,proto3" json:"messageUsedForSecret,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GetUserAggregatedSignatureRequest) Reset()         { *m = GetUserAggregatedSignatureRequest{} }
-func (m *GetUserAggregatedSignatureRequest) String() string { return proto.CompactTextString(m) }
-func (*GetUserAggregatedSignatureRequest) ProtoMessage()    {}
-func (*GetUserAggregatedSignatureRequest) Descriptor() ([]byte, []int) {
+func (m *GenerateSecretFromInputRequest) Reset()         { *m = GenerateSecretFromInputRequest{} }
+func (m *GenerateSecretFromInputRequest) String() string { return proto.CompactTextString(m) }
+func (*GenerateSecretFromInputRequest) ProtoMessage()    {}
+func (*GenerateSecretFromInputRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d2bf9140ba153fb4, []int{2}
+}
+
+func (m *GenerateSecretFromInputRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GenerateSecretFromInputRequest.Unmarshal(m, b)
+}
+func (m *GenerateSecretFromInputRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GenerateSecretFromInputRequest.Marshal(b, m, deterministic)
+}
+func (m *GenerateSecretFromInputRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GenerateSecretFromInputRequest.Merge(m, src)
+}
+func (m *GenerateSecretFromInputRequest) XXX_Size() int {
+	return xxx_messageInfo_GenerateSecretFromInputRequest.Size(m)
+}
+func (m *GenerateSecretFromInputRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GenerateSecretFromInputRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GenerateSecretFromInputRequest proto.InternalMessageInfo
+
+func (m *GenerateSecretFromInputRequest) GetUserId() string {
+	if m != nil {
+		return m.UserId
+	}
+	return ""
+}
+
+func (m *GenerateSecretFromInputRequest) GetMessageUsedForSecret() string {
+	if m != nil {
+		return m.MessageUsedForSecret
+	}
+	return ""
+}
+
+// Response message used when signing
+type GenerateSecretFromInputResponse struct {
+	Secret               string   `protobuf:"bytes,1,opt,name=secret,proto3" json:"secret,omitempty"`
+	Acknack              bool     `protobuf:"varint,2,opt,name=acknack,proto3" json:"acknack,omitempty"`
+	Comments             string   `protobuf:"bytes,3,opt,name=comments,proto3" json:"comments,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GenerateSecretFromInputResponse) Reset()         { *m = GenerateSecretFromInputResponse{} }
+func (m *GenerateSecretFromInputResponse) String() string { return proto.CompactTextString(m) }
+func (*GenerateSecretFromInputResponse) ProtoMessage()    {}
+func (*GenerateSecretFromInputResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d2bf9140ba153fb4, []int{3}
 }
 
-func (m *GetUserAggregatedSignatureRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GetUserAggregatedSignatureRequest.Unmarshal(m, b)
+func (m *GenerateSecretFromInputResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GenerateSecretFromInputResponse.Unmarshal(m, b)
 }
-func (m *GetUserAggregatedSignatureRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GetUserAggregatedSignatureRequest.Marshal(b, m, deterministic)
+func (m *GenerateSecretFromInputResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GenerateSecretFromInputResponse.Marshal(b, m, deterministic)
 }
-func (m *GetUserAggregatedSignatureRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetUserAggregatedSignatureRequest.Merge(m, src)
+func (m *GenerateSecretFromInputResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GenerateSecretFromInputResponse.Merge(m, src)
 }
-func (m *GetUserAggregatedSignatureRequest) XXX_Size() int {
-	return xxx_messageInfo_GetUserAggregatedSignatureRequest.Size(m)
+func (m *GenerateSecretFromInputResponse) XXX_Size() int {
+	return xxx_messageInfo_GenerateSecretFromInputResponse.Size(m)
 }
-func (m *GetUserAggregatedSignatureRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetUserAggregatedSignatureRequest.DiscardUnknown(m)
+func (m *GenerateSecretFromInputResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GenerateSecretFromInputResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetUserAggregatedSignatureRequest proto.InternalMessageInfo
+var xxx_messageInfo_GenerateSecretFromInputResponse proto.InternalMessageInfo
 
-func (m *GetUserAggregatedSignatureRequest) GetUserId() string {
+func (m *GenerateSecretFromInputResponse) GetSecret() string {
 	if m != nil {
-		return m.UserId
+		return m.Secret
 	}
 	return ""
 }
 
-// Response message when reading a users authorization Signature
-type GetUserAggregatedSignatureResponse struct {
-	UserId                  string   `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
-	UserAggregatedSignature string   `protobuf:"bytes,2,opt,name=userAggregatedSignature,proto3" json:"userAggregatedSignature,omitempty"`
-	Acknack                 bool     `protobuf:"varint,3,opt,name=acknack,proto3" json:"acknack,omitempty"`
-	Comments                string   `protobuf:"bytes,4,opt,name=comments,proto3" json:"comments,omitempty"`
-	XXX_NoUnkeyedLiteral    struct{} `json:"-"`
-	XXX_unrecognized        []byte   `json:"-"`
-	XXX_sizecache           int32    `json:"-"`
-}
-
-func (m *GetUserAggregatedSignatureResponse) Reset()         { *m = GetUserAggregatedSignatureResponse{} }
-func (m *GetUserAggregatedSignatureResponse) String() string { return proto.CompactTextString(m) }
-func (*GetUserAggregatedSignatureResponse) ProtoMessage()    {}
-func (*GetUserAggregatedSignatureResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_d2bf9140ba153fb4, []int{4}
-}
-
-func (m *GetUserAggregatedSignatureResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GetUserAggregatedSignatureResponse.Unmarshal(m, b)
-}
-func (m *GetUserAggregatedSignatureResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GetUserAggregatedSignatureResponse.Marshal(b, m, deterministic)
-}
-func (m *GetUserAggregatedSignatureResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetUserAggregatedSignatureResponse.Merge(m, src)
-}
-func (m *GetUserAggregatedSignatureResponse) XXX_Size() int {
-	return xxx_messageInfo_GetUserAggregatedSignatureResponse.Size(m)
-}
-func (m *GetUserAggregatedSignatureResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetUserAggregatedSignatureResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_GetUserAggregatedSignatureResponse proto.InternalMessageInfo
-
-func (m *GetUserAggregatedSignatureResponse) GetUserId() string {
-	if m != nil {
-		return m.UserId
-	}
-	return ""
-}
-
-func (m *GetUserAggregatedSignatureResponse) GetUserAggregatedSignature() string {
-	if m != nil {
-		return m.UserAggregatedSignature
-	}
-	return ""
-}
-
-func (m *GetUserAggregatedSignatureResponse) GetAcknack() bool {
+func (m *GenerateSecretFromInputResponse) GetAcknack() bool {
 	if m != nil {
 		return m.Acknack
 	}
 	return false
 }
 
-func (m *GetUserAggregatedSignatureResponse) GetComments() string {
+func (m *GenerateSecretFromInputResponse) GetComments() string {
 	if m != nil {
 		return m.Comments
 	}
@@ -260,9 +212,8 @@ func (m *GetUserAggregatedSignatureResponse) GetComments() string {
 func init() {
 	proto.RegisterType((*EmptyParameter)(nil), "secretMessageGenerator_grpc_api.EmptyParameter")
 	proto.RegisterType((*AckNackResponse)(nil), "secretMessageGenerator_grpc_api.AckNackResponse")
-	proto.RegisterType((*UpdateUserAggregatedSignatureRequest)(nil), "secretMessageGenerator_grpc_api.UpdateUserAggregatedSignatureRequest")
-	proto.RegisterType((*GetUserAggregatedSignatureRequest)(nil), "secretMessageGenerator_grpc_api.GetUserAggregatedSignatureRequest")
-	proto.RegisterType((*GetUserAggregatedSignatureResponse)(nil), "secretMessageGenerator_grpc_api.GetUserAggregatedSignatureResponse")
+	proto.RegisterType((*GenerateSecretFromInputRequest)(nil), "secretMessageGenerator_grpc_api.GenerateSecretFromInputRequest")
+	proto.RegisterType((*GenerateSecretFromInputResponse)(nil), "secretMessageGenerator_grpc_api.GenerateSecretFromInputResponse")
 }
 
 func init() {
@@ -270,29 +221,27 @@ func init() {
 }
 
 var fileDescriptor_d2bf9140ba153fb4 = []byte{
-	// 346 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x93, 0xcf, 0x4e, 0x22, 0x41,
-	0x10, 0xc6, 0x77, 0x96, 0x0d, 0x0b, 0x75, 0xd8, 0x35, 0x7d, 0x50, 0x32, 0x17, 0x61, 0x82, 0x09,
-	0x27, 0x34, 0x7a, 0x31, 0xf1, 0x84, 0x4a, 0x26, 0x1e, 0x34, 0x66, 0x08, 0x67, 0xd2, 0x36, 0x95,
-	0x61, 0x32, 0x99, 0xee, 0xb6, 0xba, 0xc6, 0x7f, 0xaf, 0xe0, 0x3b, 0x78, 0xf5, 0xe2, 0x23, 0x7a,
-	0x30, 0x12, 0x04, 0x31, 0xe0, 0x18, 0xf4, 0x58, 0xe9, 0xae, 0xaf, 0xbe, 0xfc, 0xbe, 0x2a, 0xd8,
-	0x72, 0xa8, 0x08, 0xf9, 0x14, 0x9d, 0x93, 0x31, 0x86, 0xa8, 0x91, 0x24, 0x1b, 0x1a, 0xc4, 0x64,
-	0xd5, 0x40, 0xda, 0xa4, 0x6d, 0xc9, 0xb0, 0x11, 0x9b, 0x05, 0xdf, 0x82, 0x35, 0xf8, 0xd7, 0xcd,
-	0x2c, 0xdf, 0x9e, 0x4b, 0x92, 0x19, 0x32, 0x52, 0x10, 0xc2, 0xff, 0x8e, 0x4a, 0xcf, 0xa4, 0x4a,
-	0x23, 0x74, 0xd6, 0x68, 0x87, 0xa2, 0x06, 0x7f, 0xa5, 0x4a, 0xb5, 0x54, 0x69, 0xcd, 0xab, 0x7b,
-	0xad, 0x4a, 0xf4, 0x56, 0x0a, 0x1f, 0x2a, 0xca, 0x64, 0x19, 0x6a, 0x76, 0xb5, 0xdf, 0x75, 0xaf,
-	0x55, 0x8d, 0xa6, 0x75, 0x70, 0x03, 0xcd, 0xbe, 0x1d, 0x4a, 0xc6, 0xbe, 0x43, 0xea, 0xc4, 0x31,
-	0x61, 0x2c, 0x19, 0x87, 0xbd, 0x24, 0xd6, 0x92, 0x73, 0xc2, 0x08, 0x2f, 0x73, 0x74, 0x2c, 0xd6,
-	0xa1, 0x9c, 0x3b, 0xa4, 0x93, 0xe1, 0x58, 0xbc, 0x1a, 0x4d, 0x2a, 0xb1, 0x0f, 0x1b, 0xf9, 0xe2,
-	0xce, 0xc9, 0xa8, 0x65, 0xcf, 0xc1, 0x01, 0x34, 0x42, 0xe4, 0xd5, 0xc6, 0x06, 0x4f, 0x1e, 0x04,
-	0x9f, 0x75, 0x4f, 0x98, 0xfc, 0xb8, 0xeb, 0xf7, 0x94, 0x4b, 0xcb, 0x29, 0xff, 0x99, 0xa7, 0xbc,
-	0xfb, 0x5c, 0x82, 0xc6, 0xe2, 0x90, 0x43, 0xb2, 0xaa, 0x87, 0x74, 0x95, 0x28, 0x14, 0x0f, 0x1e,
-	0x34, 0x66, 0x61, 0xb8, 0x4e, 0xce, 0x23, 0x43, 0xc9, 0x9d, 0xe4, 0xc4, 0xe8, 0x99, 0x83, 0x6e,
-	0xbb, 0x68, 0xab, 0xbe, 0x12, 0xa8, 0xbf, 0x53, 0x28, 0xf3, 0x61, 0xc1, 0x82, 0x5f, 0xe2, 0xd1,
-	0x03, 0x7f, 0x39, 0x75, 0x71, 0x58, 0x28, 0x59, 0x18, 0xb8, 0x7f, 0xf4, 0x2d, 0x8d, 0xa9, 0xd3,
-	0x7b, 0x0f, 0x9a, 0xbd, 0x51, 0xce, 0xc7, 0xe6, 0x5a, 0x2f, 0x16, 0x7c, 0x85, 0x8e, 0x24, 0xb6,
-	0x0b, 0xe7, 0xcd, 0x5f, 0xde, 0x2a, 0xdc, 0x2e, 0xca, 0xe3, 0x3b, 0xdf, 0x7b, 0x09, 0x00, 0x00,
-	0xff, 0xff, 0xa3, 0x08, 0x31, 0x53, 0x10, 0x04, 0x00, 0x00,
+	// 307 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x52, 0x4d, 0x4a, 0xc3, 0x40,
+	0x14, 0x6e, 0x2a, 0xd4, 0xf6, 0x2d, 0x54, 0x06, 0xa9, 0xa5, 0x0b, 0x5b, 0x07, 0x85, 0xae, 0xaa,
+	0xd4, 0x03, 0xa8, 0xa0, 0x2d, 0x5d, 0x28, 0x92, 0xe0, 0xba, 0x8c, 0xd3, 0x47, 0x2d, 0x71, 0x7e,
+	0x7c, 0x33, 0x51, 0x3c, 0x83, 0x77, 0xf0, 0x50, 0x9e, 0x48, 0x4c, 0x52, 0xb1, 0x92, 0x18, 0x70,
+	0xf9, 0x91, 0xbc, 0xef, 0x6f, 0x3e, 0x38, 0x72, 0x28, 0x09, 0xfd, 0x35, 0x3a, 0x27, 0x16, 0x38,
+	0x41, 0x8d, 0x24, 0xbc, 0xa1, 0xd9, 0x82, 0xac, 0x9c, 0x09, 0xbb, 0x1c, 0x5a, 0x32, 0xde, 0xb0,
+	0x5e, 0xc5, 0x6f, 0x7c, 0x07, 0xb6, 0xae, 0x94, 0xf5, 0xaf, 0xb7, 0x82, 0x84, 0x42, 0x8f, 0xc4,
+	0x27, 0xb0, 0x7d, 0x21, 0xe3, 0x1b, 0x21, 0xe3, 0x10, 0x9d, 0x35, 0xda, 0x21, 0xeb, 0xc0, 0xa6,
+	0x90, 0xb1, 0x16, 0x32, 0xee, 0x04, 0xfd, 0x60, 0xd0, 0x0c, 0x57, 0x90, 0x75, 0xa1, 0x29, 0x8d,
+	0x52, 0xa8, 0xbd, 0xeb, 0xd4, 0xfb, 0xc1, 0xa0, 0x15, 0x7e, 0x63, 0xfe, 0x08, 0xfb, 0xb9, 0x20,
+	0x46, 0xa9, 0x8b, 0x31, 0x19, 0x35, 0xd5, 0x36, 0xf1, 0x21, 0x3e, 0x25, 0xe8, 0x3c, 0x6b, 0x43,
+	0x23, 0x71, 0x48, 0xd3, 0x79, 0x4a, 0xdb, 0x0a, 0x73, 0xc4, 0x46, 0xb0, 0xab, 0x32, 0xc7, 0x77,
+	0x0e, 0xe7, 0x63, 0x43, 0xd9, 0x7d, 0xae, 0x50, 0xf8, 0x8d, 0x1b, 0xe8, 0x95, 0xaa, 0xe5, 0x31,
+	0xda, 0xd0, 0xc8, 0xea, 0x58, 0xc9, 0x65, 0xe8, 0x67, 0xbc, 0x7a, 0x79, 0xbc, 0x8d, 0xf5, 0x78,
+	0xa3, 0x8f, 0x3a, 0x1c, 0x14, 0xb7, 0x3b, 0x21, 0x2b, 0x23, 0xa4, 0xe7, 0xa5, 0x44, 0xf6, 0x1e,
+	0xc0, 0x5e, 0x89, 0x2f, 0x76, 0x36, 0xac, 0x7a, 0xc4, 0xbf, 0xfb, 0xeb, 0x9e, 0xff, 0x9f, 0x20,
+	0xab, 0x84, 0xd7, 0xd8, 0x5b, 0x00, 0x87, 0xd1, 0x43, 0xe2, 0x2f, 0xcd, 0x8b, 0x2e, 0x66, 0xfb,
+	0x8a, 0x82, 0xc4, 0x8e, 0x2b, 0xc5, 0xd6, 0x87, 0xd4, 0x3d, 0xa9, 0x3c, 0xf8, 0xb5, 0x33, 0x5e,
+	0xbb, 0x6f, 0xa4, 0xb3, 0x3d, 0xfd, 0x0c, 0x00, 0x00, 0xff, 0xff, 0x6a, 0x58, 0xb6, 0xdd, 0xdf,
+	0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -307,10 +256,8 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type SecretMessageGeneratorGrpcServiceClient interface {
-	// Updates a specifics users aggregated signature
-	UpdateUsersAuthorizationSignature(ctx context.Context, in *UpdateUserAggregatedSignatureRequest, opts ...grpc.CallOption) (*AckNackResponse, error)
-	// Reads a specific users aggregated signature
-	GetUserAggregatedSignature(ctx context.Context, in *GetUserAggregatedSignatureRequest, opts ...grpc.CallOption) (*GetUserAggregatedSignatureResponse, error)
+	// Generate secrete used when signing
+	GenerateSecretFromInput(ctx context.Context, in *GenerateSecretFromInputRequest, opts ...grpc.CallOption) (*GenerateSecretFromInputResponse, error)
 	// Shut down server in a controlled way
 	ShutDownsecretMessageGeneratorServer(ctx context.Context, in *EmptyParameter, opts ...grpc.CallOption) (*AckNackResponse, error)
 }
@@ -323,18 +270,9 @@ func NewSecretMessageGeneratorGrpcServiceClient(cc *grpc.ClientConn) SecretMessa
 	return &secretMessageGeneratorGrpcServiceClient{cc}
 }
 
-func (c *secretMessageGeneratorGrpcServiceClient) UpdateUsersAuthorizationSignature(ctx context.Context, in *UpdateUserAggregatedSignatureRequest, opts ...grpc.CallOption) (*AckNackResponse, error) {
-	out := new(AckNackResponse)
-	err := c.cc.Invoke(ctx, "/secretMessageGenerator_grpc_api.secretMessageGeneratorGrpcService/UpdateUsersAuthorizationSignature", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *secretMessageGeneratorGrpcServiceClient) GetUserAggregatedSignature(ctx context.Context, in *GetUserAggregatedSignatureRequest, opts ...grpc.CallOption) (*GetUserAggregatedSignatureResponse, error) {
-	out := new(GetUserAggregatedSignatureResponse)
-	err := c.cc.Invoke(ctx, "/secretMessageGenerator_grpc_api.secretMessageGeneratorGrpcService/GetUserAggregatedSignature", in, out, opts...)
+func (c *secretMessageGeneratorGrpcServiceClient) GenerateSecretFromInput(ctx context.Context, in *GenerateSecretFromInputRequest, opts ...grpc.CallOption) (*GenerateSecretFromInputResponse, error) {
+	out := new(GenerateSecretFromInputResponse)
+	err := c.cc.Invoke(ctx, "/secretMessageGenerator_grpc_api.secretMessageGeneratorGrpcService/GenerateSecretFromInput", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -352,10 +290,8 @@ func (c *secretMessageGeneratorGrpcServiceClient) ShutDownsecretMessageGenerator
 
 // SecretMessageGeneratorGrpcServiceServer is the server API for SecretMessageGeneratorGrpcService service.
 type SecretMessageGeneratorGrpcServiceServer interface {
-	// Updates a specifics users aggregated signature
-	UpdateUsersAuthorizationSignature(context.Context, *UpdateUserAggregatedSignatureRequest) (*AckNackResponse, error)
-	// Reads a specific users aggregated signature
-	GetUserAggregatedSignature(context.Context, *GetUserAggregatedSignatureRequest) (*GetUserAggregatedSignatureResponse, error)
+	// Generate secrete used when signing
+	GenerateSecretFromInput(context.Context, *GenerateSecretFromInputRequest) (*GenerateSecretFromInputResponse, error)
 	// Shut down server in a controlled way
 	ShutDownsecretMessageGeneratorServer(context.Context, *EmptyParameter) (*AckNackResponse, error)
 }
@@ -364,11 +300,8 @@ type SecretMessageGeneratorGrpcServiceServer interface {
 type UnimplementedSecretMessageGeneratorGrpcServiceServer struct {
 }
 
-func (*UnimplementedSecretMessageGeneratorGrpcServiceServer) UpdateUsersAuthorizationSignature(ctx context.Context, req *UpdateUserAggregatedSignatureRequest) (*AckNackResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateUsersAuthorizationSignature not implemented")
-}
-func (*UnimplementedSecretMessageGeneratorGrpcServiceServer) GetUserAggregatedSignature(ctx context.Context, req *GetUserAggregatedSignatureRequest) (*GetUserAggregatedSignatureResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUserAggregatedSignature not implemented")
+func (*UnimplementedSecretMessageGeneratorGrpcServiceServer) GenerateSecretFromInput(ctx context.Context, req *GenerateSecretFromInputRequest) (*GenerateSecretFromInputResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GenerateSecretFromInput not implemented")
 }
 func (*UnimplementedSecretMessageGeneratorGrpcServiceServer) ShutDownsecretMessageGeneratorServer(ctx context.Context, req *EmptyParameter) (*AckNackResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ShutDownsecretMessageGeneratorServer not implemented")
@@ -378,38 +311,20 @@ func RegisterSecretMessageGeneratorGrpcServiceServer(s *grpc.Server, srv SecretM
 	s.RegisterService(&_SecretMessageGeneratorGrpcService_serviceDesc, srv)
 }
 
-func _SecretMessageGeneratorGrpcService_UpdateUsersAuthorizationSignature_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateUserAggregatedSignatureRequest)
+func _SecretMessageGeneratorGrpcService_GenerateSecretFromInput_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GenerateSecretFromInputRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SecretMessageGeneratorGrpcServiceServer).UpdateUsersAuthorizationSignature(ctx, in)
+		return srv.(SecretMessageGeneratorGrpcServiceServer).GenerateSecretFromInput(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/secretMessageGenerator_grpc_api.secretMessageGeneratorGrpcService/UpdateUsersAuthorizationSignature",
+		FullMethod: "/secretMessageGenerator_grpc_api.secretMessageGeneratorGrpcService/GenerateSecretFromInput",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SecretMessageGeneratorGrpcServiceServer).UpdateUsersAuthorizationSignature(ctx, req.(*UpdateUserAggregatedSignatureRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _SecretMessageGeneratorGrpcService_GetUserAggregatedSignature_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserAggregatedSignatureRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SecretMessageGeneratorGrpcServiceServer).GetUserAggregatedSignature(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/secretMessageGenerator_grpc_api.secretMessageGeneratorGrpcService/GetUserAggregatedSignature",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SecretMessageGeneratorGrpcServiceServer).GetUserAggregatedSignature(ctx, req.(*GetUserAggregatedSignatureRequest))
+		return srv.(SecretMessageGeneratorGrpcServiceServer).GenerateSecretFromInput(ctx, req.(*GenerateSecretFromInputRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -437,12 +352,8 @@ var _SecretMessageGeneratorGrpcService_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*SecretMessageGeneratorGrpcServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "UpdateUsersAuthorizationSignature",
-			Handler:    _SecretMessageGeneratorGrpcService_UpdateUsersAuthorizationSignature_Handler,
-		},
-		{
-			MethodName: "GetUserAggregatedSignature",
-			Handler:    _SecretMessageGeneratorGrpcService_GetUserAggregatedSignature_Handler,
+			MethodName: "GenerateSecretFromInput",
+			Handler:    _SecretMessageGeneratorGrpcService_GenerateSecretFromInput_Handler,
 		},
 		{
 			MethodName: "ShutDownsecretMessageGeneratorServer",
