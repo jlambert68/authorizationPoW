@@ -1,0 +1,186 @@
+syntax = "proto3";
+package userRequests_grpc_api;
+
+//~/Programs/protoc-3.13.0-linux-x86_64/bin/protoc  -I ../grpc_api/qml_server_grpc_api --go_out=plugins=grpc:../grpc_api/qml_server_grpc_api ../grpc_api/qml_server_grpc_api/qml_grpc_server.proto
+// Parameter used for Empty inputs
+message EmptyParameter {
+}
+
+// Ack/Nack- Response message with comment
+message AckNackResponse {
+    bool acknack = 1; // True=Ack, False=Nack
+    string comments = 2; //Comments if needed
+}
+
+// Services published by userRequests System
+// userRequests takes requests from end-user and process them
+// ***********************
+service userRequestsGrpcService {
+
+    // List accounts that belongs to Company and that the user is authorized to see
+    rpc ListAccounts (ListAccountsRequest) returns (ListAccountsResponse) {
+    }
+
+    // List accounts that is of the type the user provided
+    rpc ListAccountsBaseOnProvidedType (ListAccountsBasedOnProvidedTypeRequest) returns (ListAccountsBasedOnProvidedTypeResponse) {
+    }
+
+    // Add an account of a certain type
+    rpc AddAccount (AddAccountRequest) returns (AddAccountResponse) {
+
+    }
+
+    // Delete an account
+    rpc DeleteAccount (DeleteAccountRequest) returns (DeleteAccountResponse) {
+
+    }
+
+    // Add an account type
+    rpc AddAccountType (AddAccountTypeRequest) returns (AddAccountTypeResponse) {
+
+    }
+
+    // Delete an account type
+    rpc DeleteAccountType (DeleteAccountTypeTypeRequest) returns (DeleteAccountTypeResponse) {
+
+    }
+
+    // Update company information
+    rpc UpdateCompanyInformation (UpdateCompanyInformationRequest) returns (UpdateCompanyInformationResponse) {
+
+    }
+
+    // Shutdown server in a controlled way
+    rpc ShutDownuserRequestsServer (EmptyParameter) returns (AckNackResponse) {
+
+    }
+}
+
+// Request message when to create the secret message used when signing
+message GenerateSecretFromInputRequest {
+
+    string messageUsedForSecret = 2; // Part when creating secret
+}
+
+// Response message used when signing
+message GenerateSecretFromInputResponse {
+    string secret = 1; //The secret that was created
+
+}
+
+// *********************************************************************
+// Request message for listing accounts that a user is allowed to have
+message ListAccountsRequest {
+    string userId = 1; //User id for the user  doing requests
+    string companyId = 2; // The Company the user is connected to
+}
+
+// Response message for listing accounts that a user is allowed to have
+message ListAccountsResponse {
+    string userId = 1; //User id for the user  doing requests
+    string companyId = 2; // The Company the user is connected to
+    bool acknack = 3; // True=Ack, False=Nack
+    string comments = 4; // Comments if needed
+    string jsonResponse = 5; // Response data back to user
+}
+// *********************************************************************
+
+// Request message for listing accounts,based on type, that a user is allowed to have
+message ListAccountsBasedOnProvidedTypeRequest {
+    string userId = 1; //User id for the user  doing requests
+    string companyId = 2; // The Company the user is connected to
+    string accounType=3; // Only accounts with this account type will be returned   
+}
+
+// Response message for listing accounts,based on type, that a user is allowed to have
+message ListAccountsBasedOnProvidedTypeResponse {
+    string userId = 1; //User id for the user  doing requests
+    string companyId = 2; // The Company the user is connected to
+    string accounType=3; // Only accounts with this account type will be returned 
+    bool acknack = 4; // True=Ack, False=Nack
+    string comments = 5; // Comments if needed
+    string jsonResponse = 6; // Response data back to user
+
+}
+
+// *********************************************************************
+// Request message for adding an account
+message AddAccountRequest {
+    string userId = 1; //User id for the user  doing requests
+    string companyId = 2; // The Company the user is connected to
+    string jsonRequest = 3; // Request with data to be stored
+}
+
+// Response message when adding an an account
+message AddAccountResponse {
+    string userId = 1; //User id for the user  doing requests
+    string companyId = 2; // The Company the user is connected to
+    bool acknack = 3; // True=Ack, False=Nack
+    string comments = 4; // Comments if needed
+}
+
+// *********************************************************************
+// Request message for deleting an account
+message DeleteAccountRequest {
+    string userId = 1; //User id for the user  doing requests
+    string companyId = 2; // The Company the user is connected to
+    string account = 3; // Account to be deleted
+}
+
+// Response message when adding an an account
+message DeleteAccountResponse {
+    string userId = 1; //User id for the user  doing requests
+    string companyId = 2; // The Company the user is connected to
+    bool acknack = 3; // True=Ack, False=Nack
+    string comments = 4; // Comments if needed
+}
+
+// *********************************************************************
+// Request message for adding an account type
+message AddAccountTypeRequest {
+    string userId = 1; //User id for the user  doing requests
+    string companyId = 2; // The Company the user is connected to
+    string jsonAccountTypeData = 3; // Request with data to be stored
+}
+
+// Response message when adding an account type
+message AddAccountTypeResponse {
+    string userId = 1; //User id for the user  doing requests
+    string companyId = 2; // The Company the user is connected to
+    bool acknack = 3; // True=Ack, False=Nack
+    string comments = 4; // Comments if needed
+}
+
+// *********************************************************************
+// Request message for deleting an account type
+message DeleteAccountTypeTypeRequest {
+    string userId = 1; //User id for the user  doing requests
+    string companyId = 2; // The Company the user is connected to
+    string account = 3; // Account to be deleted
+}
+
+//Response message when deleting an account type
+message DeleteAccountTypeResponse {
+    string userId = 1; //User id for the user  doing requests
+    string companyId = 2; // The Company the user is connected to
+    bool acknack = 3; // True=Ack, False=Nack
+    string comments = 4; // Comments if needed
+}
+
+// *********************************************************************
+// Request message for updating company information
+message UpdateCompanyInformationRequest {
+    string userId = 1; //User id for the user  doing requests
+    string companyId = 2; // The Company the user is connected to
+    string jsonCompanyData = 3; // Request with data to be stored
+}
+
+// Response message when updating company information
+message UpdateCompanyInformationResponse {
+    string userId = 1; //User id for the user  doing requests
+    string companyId = 2; // The Company the user is connected to
+    bool acknack = 3; // True=Ack, False=Nack
+    string comments = 4; // Comments if needed
+}
+
+

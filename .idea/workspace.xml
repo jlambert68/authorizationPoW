@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="75189c07-eedc-4f6e-a92c-95c2887109f9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/secretMessageGeneratorEngine/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/secretMessageGeneratorEngine/a3s_grpc_api.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/secretMessageGeneratorEngine/a3s_server.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/secretMessageGeneratorEngine/logrus_logger.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/secretMessageGeneratorEngine/main/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/grpc_api/a3s_grpc_api/a3s_grpc_api.pb.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/grpc_api/userRequests_grpc_api/userRequests_grpc_api.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -41,17 +38,27 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/secretMessageGeneratorEngine" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/grpc_api/userRequests_grpc_api" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/grpc_api/userRequests_grpc_api" />
       <recent name="$PROJECT_DIR$/grpc_api/secretMessageGenerator_grpc_api" />
       <recent name="$PROJECT_DIR$/secretMessageGeneratorEngine" />
       <recent name="$PROJECT_DIR$/a3s_simulator_engine" />
       <recent name="$PROJECT_DIR$/common_code" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Go Build.go build secretMessageGenerator_main.go">
+    <configuration name="go build main.go (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="authorizationPoW" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/secretMessageGeneratorEngine/main/main.go" />
+      <package value="jlambert/authorizationPoW" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
     <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="authorizationPoW" />
       <working_directory value="$PROJECT_DIR$" />
@@ -61,8 +68,19 @@
       <directory value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
+    <configuration name="go build secretMessageGenerator_main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="authorizationPoW" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/secretMessageGeneratorEngine/main/secretMessageGenerator_main.go" />
+      <package value="jlambert/authorizationPoW" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build secretMessageGenerator_main.go" />
+        <item itemvalue="Go Build.go build main.go (1)" />
         <item itemvalue="Go Build.go build main.go" />
       </list>
     </recent_temporary>
@@ -71,11 +89,24 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="A3S Memory Cache soon finsihed" />
     <MESSAGE value="A3S gRPC server seems to be finsihed" />
     <MESSAGE value="A3S gRPC server is now working" />
-    <option name="LAST_COMMIT_MESSAGE" value="A3S gRPC server is now working" />
+    <MESSAGE value="Full copy of A3S into secretMessageGenerator  (before changes)" />
+    <MESSAGE value="Secret message creator is working" />
+    <option name="LAST_COMMIT_MESSAGE" value="Secret message creator is working" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
