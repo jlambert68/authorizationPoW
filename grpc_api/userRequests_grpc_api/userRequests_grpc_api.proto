@@ -51,7 +51,7 @@ service userRequestsGrpcService {
     }
 
     // Shutdown server in a controlled way
-    rpc ShutDownuserRequestsServer (EmptyParameter) returns (AckNackResponse) {
+    rpc ShutDownUserRequestsServer (EmptyParameter) returns (AckNackResponse) {
 
     }
 }
