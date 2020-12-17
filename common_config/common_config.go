@@ -21,6 +21,10 @@ const SetUpUserAuthorizationRulesServer_port = ":6002"
 const UserRequestsServer_address = "127.0.0.1"
 const UserRequestsServer_port = ":6003"
 
+// UserRequests Server
+const UserAuthorizationServer_address = "127.0.0.1"
+const UserAuthorizationServer_port = ":6004"
+
 /*************************************************************/
 // Logrus debug level
 //const LoggingLevel = logrus.DebugLevel
