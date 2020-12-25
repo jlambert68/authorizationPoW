@@ -10,8 +10,8 @@ import (
 
 /****************************************************/
 //  Set up logging specified in common config file
-func (secretMessageGeneratorServerObject *userRequestsServerObjectStruct) InitLogger(filename string) {
-	secretMessageGeneratorServerObject.logger = logrus.StandardLogger()
+func (userRequestsServerObject *userRequestsServerObjectStruct) InitLogger(filename string) {
+	userRequestsServerObject.logger = logrus.StandardLogger()
 
 	switch common_config.LoggingLevel {
 
@@ -40,12 +40,12 @@ func (secretMessageGeneratorServerObject *userRequestsServerObjectStruct) InitLo
 
 	//If no file then set standard out
 	if filename == "" {
-		secretMessageGeneratorServerObject.logger.Out = os.Stdout
+		userRequestsServerObject.logger.Out = os.Stdout
 
 	} else {
 		file, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY, 0666)
 		if err == nil {
-			secretMessageGeneratorServerObject.logger.Out = file
+			userRequestsServerObject.logger.Out = file
 		} else {
 			log.Println("Failed to log to file, using default stderr")
 		}

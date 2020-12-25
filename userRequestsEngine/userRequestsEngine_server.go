@@ -1,6 +1,7 @@
 package userRequestsEngine
 
 import (
+	"database/sql"
 	"github.com/patrickmn/go-cache"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
@@ -16,7 +17,10 @@ import (
 /****************************************************/
 // userRequests Server object hodling "some" information
 type userRequestsServerObjectStruct struct {
-	logger *logrus.Logger
+	logger       *logrus.Logger
+	databaseName string
+	sqlFile      string
+	sqlDbObject  *sql.DB
 }
 
 var userRequestsServerObject *userRequestsServerObjectStruct
@@ -67,6 +71,9 @@ func cleanup() {
 		// Stop Backend gRPC Server
 		userRequestsServerObject.StopGrpcServer()
 
+		// Close Database connection
+		userRequestsServerObject.CloseDatabaseConenction()
+
 	}
 }
 
@@ -79,7 +86,10 @@ func UserRequestsServerMain() {
 	databaseMemoryCache = cache.New(5*time.Minute, 10*time.Minute)
 
 	// Set up userRequests-Object
-	userRequestsServerObject = &userRequestsServerObjectStruct{}
+	userRequestsServerObject = &userRequestsServerObjectStruct{
+		databaseName: "./Database/CustomerAccountsDB.db",
+		sqlFile:      "./Database/CustomerAccountsDB.db - 201225.sql",
+	}
 	userRequestsServerObject.InitLogger("")
 
 	// Clean up when leaving. Is placed after logger because shutdown logs information
@@ -170,5 +180,16 @@ func (userRequestsServerObject *userRequestsServerObjectStruct) StopGrpcServer()
 		"localServerEngineLocalPort: ": common_config.UserRequestsServer_port,
 	}).Info("Close net.Listing")
 	_ = lis.Close()
+}
+
+/****************************************************/
+// Close connection to database
+func (userRequestsServerObject *userRequestsServerObjectStruct) CloseDatabaseConenction() {
+
+	// Close database connection
+	userRequestsServerObject.logger.WithFields(logrus.Fields{
+		"userRequestsServerObject.databaseName: ": userRequestsServerObject.databaseName,
+	}).Info("Close database connection")
+	userRequestsServerObject.sqlDbObject.Close()
 
 }
