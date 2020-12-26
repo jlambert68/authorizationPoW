@@ -17,22 +17,36 @@ func (userRequests_GrpcServer *userRequests_GrpcServerStruct) ListAccounts(ctx c
 	//
 	var returnMessage *userRequests_grpc_api.ListAccountsResponse
 
-	// Create return message
-	returnMessage = &userRequests_grpc_api.ListAccountsResponse{
-		UserId:       listAccountsRequest.UserId,
-		CompanyId:    listAccountsRequest.CompanyId,
-		Acknack:      true,
-		Comments:     "",
-		JsonResponse: "{}",
+	// TODO Check if user should have access to this function has access to
+	hasUserAccesToThisFunction := true
+
+	if hasUserAccesToThisFunction == false {
+		// User hasn't got access to function
+		returnMessage = &userRequests_grpc_api.ListAccountsResponse{
+			UserId:    listAccountsRequest.UserId,
+			CompanyId: listAccountsRequest.CompanyId,
+			Acknack:   false,
+			Comments:  "User hasn't got access to this function",
+			Accounts:  nil,
+		}
+
+		return returnMessage, nil
+
+	} else {
+		// User has access to function
+		// TODO generate list of accounts that user
+		usersAccounts := []string{"283592388-31", "12412412-31"}
+
+		// Create return message based on SQL question
+		returnMessage = userRequestsServerObject.sqlListAccounts(listAccountsRequest, usersAccounts)
+
+		userRequestsServerObject.logger.WithFields(logrus.Fields{
+			"id":            "8ba74bad-a3c9-4018-b0c3-d26593d30f9f",
+			"returnMessage": returnMessage,
+		}).Debug("Leaveing 'ListAccounts'")
+
+		return returnMessage, nil
 	}
-
-	userRequestsServerObject.logger.WithFields(logrus.Fields{
-		"id":            "8ba74bad-a3c9-4018-b0c3-d26593d30f9f",
-		"returnMessage": returnMessage,
-	}).Debug("Leaveing 'ListAccounts'")
-
-	return returnMessage, nil
-
 }
 
 /***********************************************************************/

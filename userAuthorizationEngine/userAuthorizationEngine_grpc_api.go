@@ -34,7 +34,94 @@ func (userAuthorizationEngine_GrpcServer *userAuthorizationEngine_GrpcServerStru
 }
 
 /***********************************************************************/
-// Saves Aggregated Signature for User in secretMessageGenerator Memory cache
+// List users authorized accounts
+func (userAuthorizationEngine_GrpcServer *userAuthorizationEngine_GrpcServerStruct) ListUsersAuthorizedAccounts(ctx context.Context, userAuthorizedAccountsRequest *userAuthorizationEngine_grpc_api.UserAuthorizedAccountsRequest) (*userAuthorizationEngine_grpc_api.UserAuthorizedAccountsResponse, error) {
+
+	userAuthorizationEngineServerObject.logger.WithFields(logrus.Fields{
+		"id": "b5499021-238f-4880-b53c-e91a9c119837",
+	}).Debug("Incoming 'ListUsersAuthorizedAccounts'")
+
+	//
+	var returnMessage *userAuthorizationEngine_grpc_api.UserAuthorizedAccountsResponse
+
+	// Create return message
+	returnMessage = &userAuthorizationEngine_grpc_api.UserAuthorizedAccountsResponse{
+		UserId:    userAuthorizedAccountsRequest.UserId,
+		CompanyId: userAuthorizedAccountsRequest.CompanyId,
+		Acknack:   false,
+		Comments:  "",
+		Accounts:  nil,
+	}
+
+	userAuthorizationEngineServerObject.logger.WithFields(logrus.Fields{
+		"id":            "29693194-cd45-4f8e-8194-e14ce5a730f6",
+		"returnMessage": returnMessage,
+	}).Debug("Leaveing 'ListUsersAuthorizedAccounts'")
+
+	return returnMessage, nil
+
+}
+
+/***********************************************************************/
+// List users authorized account types
+func (userAuthorizationEngine_GrpcServer *userAuthorizationEngine_GrpcServerStruct) ListUsersAuthorizedAccountTypes(ctx context.Context, userAuthorizedAccountTypesRequest *userAuthorizationEngine_grpc_api.UserAuthorizedAccountTypesRequest) (*userAuthorizationEngine_grpc_api.UserAuthorizedAccountTypesResponse, error) {
+
+	userAuthorizationEngineServerObject.logger.WithFields(logrus.Fields{
+		"id": "b5499021-238f-4880-b53c-e91a9c119837",
+	}).Debug("Incoming 'ListUsersAuthorizedAccountTypes'")
+
+	//
+	var returnMessage *userAuthorizationEngine_grpc_api.UserAuthorizedAccountTypesResponse
+
+	// Create return message
+	returnMessage = &userAuthorizationEngine_grpc_api.UserAuthorizedAccountTypesResponse{
+		UserId:       userAuthorizedAccountTypesRequest.UserId,
+		CompanyId:    userAuthorizedAccountTypesRequest.CompanyId,
+		Acknack:      false,
+		Comments:     "",
+		AccountTypes: nil,
+	}
+
+	userAuthorizationEngineServerObject.logger.WithFields(logrus.Fields{
+		"id":            "29693194-cd45-4f8e-8194-e14ce5a730f6",
+		"returnMessage": returnMessage,
+	}).Debug("Leaveing 'ListUsersAuthorizedAccountTypes'")
+
+	return returnMessage, nil
+
+}
+
+/***********************************************************************/
+// List users authorized companies
+func (userAuthorizationEngine_GrpcServer *userAuthorizationEngine_GrpcServerStruct) ListUsersAuthorizedCompanies(ctx context.Context, userAuthorizedCompaniesRequest *userAuthorizationEngine_grpc_api.UserAuthorizedCompaniesRequest) (*userAuthorizationEngine_grpc_api.UserAuthorizedCompaniesResponse, error) {
+
+	userAuthorizationEngineServerObject.logger.WithFields(logrus.Fields{
+		"id": "b5499021-238f-4880-b53c-e91a9c119837",
+	}).Debug("Incoming 'ListUsersAuthorizedAccountTypes'")
+
+	//
+	var returnMessage *userAuthorizationEngine_grpc_api.UserAuthorizedAccountTypesResponse
+
+	// Create return message
+	returnMessage = &userAuthorizationEngine_grpc_api.UserAuthorizedAccountTypesResponse{
+		UserId:       userAuthorizedAccountTypesRequest.UserId,
+		CompanyId:    userAuthorizedAccountTypesRequest.CompanyId,
+		Acknack:      false,
+		Comments:     "",
+		AccountTypes: nil,
+	}
+
+	userAuthorizationEngineServerObject.logger.WithFields(logrus.Fields{
+		"id":            "29693194-cd45-4f8e-8194-e14ce5a730f6",
+		"returnMessage": returnMessage,
+	}).Debug("Leaveing 'ListUsersAuthorizedAccountTypes'")
+
+	return returnMessage, nil
+
+}
+
+/***********************************************************************/
+// Shut down Authorization server
 func (userAuthorizationEngine_GrpcServer *userAuthorizationEngine_GrpcServerStruct) ShutDownUserAuthorizationServer(ctx context.Context, emptyParameter *userAuthorizationEngine_grpc_api.EmptyParameter) (*userAuthorizationEngine_grpc_api.AckNackResponse, error) {
 
 	userAuthorizationEngineServerObject.logger.WithFields(logrus.Fields{

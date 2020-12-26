@@ -56,17 +56,6 @@ service userRequestsGrpcService {
     }
 }
 
-// Request message when to create the secret message used when signing
-message GenerateSecretFromInputRequest {
-
-    string messageUsedForSecret = 2; // Part when creating secret
-}
-
-// Response message used when signing
-message GenerateSecretFromInputResponse {
-    string secret = 1; //The secret that was created
-
-}
 
 // *********************************************************************
 // Request message for listing accounts that a user is allowed to have
@@ -81,7 +70,12 @@ message ListAccountsResponse {
     string companyId = 2; // The Company the user is connected to
     bool acknack = 3; // True=Ack, False=Nack
     string comments = 4; // Comments if needed
-    string jsonResponse = 5; // Response data back to user
+    repeated Account accounts = 5; // Accounts that the user has access to
+}
+
+//  Holds the account that the user has access to
+message Account {
+    string account =1; // Account number
 }
 // *********************************************************************
 

@@ -2,6 +2,7 @@ package userRequestsEngine
 
 import (
 	"database/sql"
+	_ "github.com/mattn/go-sqlite3" // Import go-sqlite3 library
 	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"jlambert/authorizationPoW/grpc_api/userRequests_grpc_api"
@@ -10,46 +11,92 @@ import (
 
 /****************************************************/
 // Execute user request: 'ListAccounts (ListAccountsRequest) returns (ListAccountsResponse)'
-func (userRequestsServerObject *userRequestsServerObjectStruct) sqlListAccounts(listAccountsRequest *userRequests_grpc_api.ListAccountsRequest) *userRequests_grpc_api.ListAccountsResponse {
+func (userRequestsServerObject *userRequestsServerObjectStruct) sqlListAccounts(listAccountsRequest *userRequests_grpc_api.ListAccountsRequest, allowedUsersAccounts []string) *userRequests_grpc_api.ListAccountsResponse {
 	var err error
+	var accountsList string = ""
+	var returnMessage *userRequests_grpc_api.ListAccountsResponse
 
-	// SQl for 'ListAccounts'
-	sqlText := "SELECT * "
-	sqlText += "FROM Accounts "
-	sqlText += "WHERE "
-	sqlText += "Company = ? AND"
-	sqlText += "Company = ? AND"
-	sqlText += "ORDER BY AccountNumbert"
+	// Convert User Allowed Accounts into a string
+	// If user doesn't has access to any accounts then exit with empty result set
+	if len(allowedUsersAccounts) == 0 {
+		returnMessage = &userRequests_grpc_api.ListAccountsResponse{
+			UserId:    listAccountsRequest.UserId,
+			CompanyId: listAccountsRequest.CompanyId,
+			Acknack:   false,
+			Comments:  "User doesn't have access to any accounts.",
+			Accounts:  nil,
+		}
 
-	// Create a sql statement
-	sqlStatement, err := userRequestsServerObject.sqlDbObject.Prepare(sqlText) // Prepare SQL Statement
-	if err != nil {
-		userRequestsServerObject.logger.WithFields(logrus.Fields{
-			"Id":          "3d6ae565-1ebe-4bb3-838a-c31cbe4dc653",
-			"err.Error()": err.Error(),
-		}).Panic("Couldn't crete sql-statement, will exit program.")
+		// return message to user
+		return returnMessage
+
 	} else {
-
-		// Execute SQL Statements
-		sqlResults, err := sqlStatement.Exec()
-		// If not succeeded then exit program because something is not as intended.
-		if err != nil {
-			userRequestsServerObject.logger.WithFields(logrus.Fields{
-				"Id":                                    "aad61d78-5e8f-4989-9c26-2efdfde85c20",
-				"err.Error()":                           err.Error(),
-				"userRequestsServerObject.databaseName": userRequestsServerObject.databaseName,
-			}).Panic("Exiting because couldn't execute sql to create and initialize database")
-		} else {
-			// Success in executing sqlStatement
-			userRequestsServerObject.logger.WithFields(logrus.Fields{
-				"Id":                                    "51a980e7-7a65-4e2b-904a-3a978772cf96",
-				"userRequestsServerObject.databaseName": userRequestsServerObject.databaseName,
-				"sqlResults":                            sqlResults,
-			}).Debug("Success in executing sql to create and initialize database")
+		for accountPosition, account := range allowedUsersAccounts {
+			if accountPosition == 0 {
+				accountsList = "'" + account + "'"
+			} else {
+				accountsList = accountsList + "," + "'" + account + "'"
+			}
 		}
 	}
 
-	return nil
+	// SQl for 'ListAccounts'
+	sqlText := "SELECT AccountNumber "
+	sqlText += "FROM Accounts "
+	sqlText += "WHERE "
+	sqlText += "Company = " + "'" + listAccountsRequest.CompanyId + "' AND "
+	sqlText += "AccountNumber In (" + accountsList + ") "
+	sqlText += "ORDER BY AccountNumber "
+
+	// Execute a sql quesry
+	sqlResponseRows, err := userRequestsServerObject.sqlDbObject.Query(sqlText)
+	if err != nil {
+		userRequestsServerObject.logger.WithFields(logrus.Fields{
+			"Id":          "236e8545-920e-4ef9-a815-0d39587cc114",
+			"err.Error()": err.Error(),
+			"sqlText":     sqlText,
+		}).Warning("Couldn't execute sql-query")
+
+		// Create return message
+		returnMessage = &userRequests_grpc_api.ListAccountsResponse{
+			UserId:    listAccountsRequest.UserId,
+			CompanyId: listAccountsRequest.CompanyId,
+			Acknack:   false,
+			Comments:  "Error While executing SQL",
+			Accounts:  nil,
+		}
+		return returnMessage
+
+	} else {
+
+		// Success in executing sqlStatement
+		userRequestsServerObject.logger.WithFields(logrus.Fields{
+			"Id":              "146e1294-141a-4584-9cc3-cd0e48421b5b",
+			"sqlResponseRows": sqlResponseRows,
+		}).Debug("Success in executing sql for 'ListAccounts'")
+
+		// Extract data from SQL results and create response object
+		var accountsList []*userRequests_grpc_api.Account
+		var AccountNumber string
+
+		// Iterate and fetch the records from result cursor
+		for sqlResponseRows.Next() {
+			sqlResponseRows.Scan(&AccountNumber)
+			convertedAccount := &userRequests_grpc_api.Account{Account: AccountNumber}
+			accountsList = append(accountsList, convertedAccount)
+		}
+
+		// Create return message
+		returnMessage = &userRequests_grpc_api.ListAccountsResponse{
+			UserId:    listAccountsRequest.UserId,
+			CompanyId: listAccountsRequest.CompanyId,
+			Acknack:   true,
+			Comments:  "",
+			Accounts:  accountsList,
+		}
+	}
+
+	return returnMessage
 }
 
 /****************************************************/

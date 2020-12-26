@@ -95,6 +95,9 @@ func UserRequestsServerMain() {
 	// Clean up when leaving. Is placed after logger because shutdown logs information
 	defer cleanup()
 
+	// Initiate SQL database
+	userRequestsServerObject.initializeSqlDB()
+
 	// Start userRequests gRPC-server
 	userRequestsServerObject.InitGrpcServer()
 

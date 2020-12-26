@@ -234,11 +234,503 @@ func (m *UserAuthorizationResponse) GetComments() string {
 	return ""
 }
 
+// *********************************************************************
+// Request message listing users authorized accounts
+type UserAuthorizedAccountsRequest struct {
+	UserId               string   `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	CompanyId            string   `protobuf:"bytes,2,opt,name=companyId,proto3" json:"companyId,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *UserAuthorizedAccountsRequest) Reset()         { *m = UserAuthorizedAccountsRequest{} }
+func (m *UserAuthorizedAccountsRequest) String() string { return proto.CompactTextString(m) }
+func (*UserAuthorizedAccountsRequest) ProtoMessage()    {}
+func (*UserAuthorizedAccountsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f486cd898f074c5b, []int{4}
+}
+
+func (m *UserAuthorizedAccountsRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UserAuthorizedAccountsRequest.Unmarshal(m, b)
+}
+func (m *UserAuthorizedAccountsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UserAuthorizedAccountsRequest.Marshal(b, m, deterministic)
+}
+func (m *UserAuthorizedAccountsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UserAuthorizedAccountsRequest.Merge(m, src)
+}
+func (m *UserAuthorizedAccountsRequest) XXX_Size() int {
+	return xxx_messageInfo_UserAuthorizedAccountsRequest.Size(m)
+}
+func (m *UserAuthorizedAccountsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UserAuthorizedAccountsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UserAuthorizedAccountsRequest proto.InternalMessageInfo
+
+func (m *UserAuthorizedAccountsRequest) GetUserId() string {
+	if m != nil {
+		return m.UserId
+	}
+	return ""
+}
+
+func (m *UserAuthorizedAccountsRequest) GetCompanyId() string {
+	if m != nil {
+		return m.CompanyId
+	}
+	return ""
+}
+
+// Response message listing users authorized accounts
+type UserAuthorizedAccountsResponse struct {
+	UserId               string     `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	CompanyId            string     `protobuf:"bytes,2,opt,name=companyId,proto3" json:"companyId,omitempty"`
+	Acknack              bool       `protobuf:"varint,3,opt,name=acknack,proto3" json:"acknack,omitempty"`
+	Comments             string     `protobuf:"bytes,4,opt,name=comments,proto3" json:"comments,omitempty"`
+	Accounts             []*Account `protobuf:"bytes,5,rep,name=accounts,proto3" json:"accounts,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
+}
+
+func (m *UserAuthorizedAccountsResponse) Reset()         { *m = UserAuthorizedAccountsResponse{} }
+func (m *UserAuthorizedAccountsResponse) String() string { return proto.CompactTextString(m) }
+func (*UserAuthorizedAccountsResponse) ProtoMessage()    {}
+func (*UserAuthorizedAccountsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f486cd898f074c5b, []int{5}
+}
+
+func (m *UserAuthorizedAccountsResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UserAuthorizedAccountsResponse.Unmarshal(m, b)
+}
+func (m *UserAuthorizedAccountsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UserAuthorizedAccountsResponse.Marshal(b, m, deterministic)
+}
+func (m *UserAuthorizedAccountsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UserAuthorizedAccountsResponse.Merge(m, src)
+}
+func (m *UserAuthorizedAccountsResponse) XXX_Size() int {
+	return xxx_messageInfo_UserAuthorizedAccountsResponse.Size(m)
+}
+func (m *UserAuthorizedAccountsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_UserAuthorizedAccountsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UserAuthorizedAccountsResponse proto.InternalMessageInfo
+
+func (m *UserAuthorizedAccountsResponse) GetUserId() string {
+	if m != nil {
+		return m.UserId
+	}
+	return ""
+}
+
+func (m *UserAuthorizedAccountsResponse) GetCompanyId() string {
+	if m != nil {
+		return m.CompanyId
+	}
+	return ""
+}
+
+func (m *UserAuthorizedAccountsResponse) GetAcknack() bool {
+	if m != nil {
+		return m.Acknack
+	}
+	return false
+}
+
+func (m *UserAuthorizedAccountsResponse) GetComments() string {
+	if m != nil {
+		return m.Comments
+	}
+	return ""
+}
+
+func (m *UserAuthorizedAccountsResponse) GetAccounts() []*Account {
+	if m != nil {
+		return m.Accounts
+	}
+	return nil
+}
+
+//  Holds the account that the user has access to
+type Account struct {
+	Account              string   `protobuf:"bytes,1,opt,name=account,proto3" json:"account,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Account) Reset()         { *m = Account{} }
+func (m *Account) String() string { return proto.CompactTextString(m) }
+func (*Account) ProtoMessage()    {}
+func (*Account) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f486cd898f074c5b, []int{6}
+}
+
+func (m *Account) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Account.Unmarshal(m, b)
+}
+func (m *Account) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Account.Marshal(b, m, deterministic)
+}
+func (m *Account) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Account.Merge(m, src)
+}
+func (m *Account) XXX_Size() int {
+	return xxx_messageInfo_Account.Size(m)
+}
+func (m *Account) XXX_DiscardUnknown() {
+	xxx_messageInfo_Account.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Account proto.InternalMessageInfo
+
+func (m *Account) GetAccount() string {
+	if m != nil {
+		return m.Account
+	}
+	return ""
+}
+
+// *********************************************************************
+// Request message listing users authorized account types
+type UserAuthorizedAccountTypesRequest struct {
+	UserId               string   `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	CompanyId            string   `protobuf:"bytes,2,opt,name=companyId,proto3" json:"companyId,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *UserAuthorizedAccountTypesRequest) Reset()         { *m = UserAuthorizedAccountTypesRequest{} }
+func (m *UserAuthorizedAccountTypesRequest) String() string { return proto.CompactTextString(m) }
+func (*UserAuthorizedAccountTypesRequest) ProtoMessage()    {}
+func (*UserAuthorizedAccountTypesRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f486cd898f074c5b, []int{7}
+}
+
+func (m *UserAuthorizedAccountTypesRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UserAuthorizedAccountTypesRequest.Unmarshal(m, b)
+}
+func (m *UserAuthorizedAccountTypesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UserAuthorizedAccountTypesRequest.Marshal(b, m, deterministic)
+}
+func (m *UserAuthorizedAccountTypesRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UserAuthorizedAccountTypesRequest.Merge(m, src)
+}
+func (m *UserAuthorizedAccountTypesRequest) XXX_Size() int {
+	return xxx_messageInfo_UserAuthorizedAccountTypesRequest.Size(m)
+}
+func (m *UserAuthorizedAccountTypesRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UserAuthorizedAccountTypesRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UserAuthorizedAccountTypesRequest proto.InternalMessageInfo
+
+func (m *UserAuthorizedAccountTypesRequest) GetUserId() string {
+	if m != nil {
+		return m.UserId
+	}
+	return ""
+}
+
+func (m *UserAuthorizedAccountTypesRequest) GetCompanyId() string {
+	if m != nil {
+		return m.CompanyId
+	}
+	return ""
+}
+
+// Response message listing users authorized account types
+type UserAuthorizedAccountTypesResponse struct {
+	UserId               string         `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	CompanyId            string         `protobuf:"bytes,2,opt,name=companyId,proto3" json:"companyId,omitempty"`
+	Acknack              bool           `protobuf:"varint,3,opt,name=acknack,proto3" json:"acknack,omitempty"`
+	Comments             string         `protobuf:"bytes,4,opt,name=comments,proto3" json:"comments,omitempty"`
+	AccountTypes         []*AccountType `protobuf:"bytes,5,rep,name=accountTypes,proto3" json:"accountTypes,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *UserAuthorizedAccountTypesResponse) Reset()         { *m = UserAuthorizedAccountTypesResponse{} }
+func (m *UserAuthorizedAccountTypesResponse) String() string { return proto.CompactTextString(m) }
+func (*UserAuthorizedAccountTypesResponse) ProtoMessage()    {}
+func (*UserAuthorizedAccountTypesResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f486cd898f074c5b, []int{8}
+}
+
+func (m *UserAuthorizedAccountTypesResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UserAuthorizedAccountTypesResponse.Unmarshal(m, b)
+}
+func (m *UserAuthorizedAccountTypesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UserAuthorizedAccountTypesResponse.Marshal(b, m, deterministic)
+}
+func (m *UserAuthorizedAccountTypesResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UserAuthorizedAccountTypesResponse.Merge(m, src)
+}
+func (m *UserAuthorizedAccountTypesResponse) XXX_Size() int {
+	return xxx_messageInfo_UserAuthorizedAccountTypesResponse.Size(m)
+}
+func (m *UserAuthorizedAccountTypesResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_UserAuthorizedAccountTypesResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UserAuthorizedAccountTypesResponse proto.InternalMessageInfo
+
+func (m *UserAuthorizedAccountTypesResponse) GetUserId() string {
+	if m != nil {
+		return m.UserId
+	}
+	return ""
+}
+
+func (m *UserAuthorizedAccountTypesResponse) GetCompanyId() string {
+	if m != nil {
+		return m.CompanyId
+	}
+	return ""
+}
+
+func (m *UserAuthorizedAccountTypesResponse) GetAcknack() bool {
+	if m != nil {
+		return m.Acknack
+	}
+	return false
+}
+
+func (m *UserAuthorizedAccountTypesResponse) GetComments() string {
+	if m != nil {
+		return m.Comments
+	}
+	return ""
+}
+
+func (m *UserAuthorizedAccountTypesResponse) GetAccountTypes() []*AccountType {
+	if m != nil {
+		return m.AccountTypes
+	}
+	return nil
+}
+
+//  Holds the account type that the user has access to
+type AccountType struct {
+	AccountType          string   `protobuf:"bytes,1,opt,name=accountType,proto3" json:"accountType,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *AccountType) Reset()         { *m = AccountType{} }
+func (m *AccountType) String() string { return proto.CompactTextString(m) }
+func (*AccountType) ProtoMessage()    {}
+func (*AccountType) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f486cd898f074c5b, []int{9}
+}
+
+func (m *AccountType) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_AccountType.Unmarshal(m, b)
+}
+func (m *AccountType) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_AccountType.Marshal(b, m, deterministic)
+}
+func (m *AccountType) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AccountType.Merge(m, src)
+}
+func (m *AccountType) XXX_Size() int {
+	return xxx_messageInfo_AccountType.Size(m)
+}
+func (m *AccountType) XXX_DiscardUnknown() {
+	xxx_messageInfo_AccountType.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_AccountType proto.InternalMessageInfo
+
+func (m *AccountType) GetAccountType() string {
+	if m != nil {
+		return m.AccountType
+	}
+	return ""
+}
+
+// *********************************************************************
+// Request message listing users authorized companies
+type UserAuthorizedCompaniesRequest struct {
+	UserId               string   `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	CompanyId            string   `protobuf:"bytes,2,opt,name=companyId,proto3" json:"companyId,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *UserAuthorizedCompaniesRequest) Reset()         { *m = UserAuthorizedCompaniesRequest{} }
+func (m *UserAuthorizedCompaniesRequest) String() string { return proto.CompactTextString(m) }
+func (*UserAuthorizedCompaniesRequest) ProtoMessage()    {}
+func (*UserAuthorizedCompaniesRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f486cd898f074c5b, []int{10}
+}
+
+func (m *UserAuthorizedCompaniesRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UserAuthorizedCompaniesRequest.Unmarshal(m, b)
+}
+func (m *UserAuthorizedCompaniesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UserAuthorizedCompaniesRequest.Marshal(b, m, deterministic)
+}
+func (m *UserAuthorizedCompaniesRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UserAuthorizedCompaniesRequest.Merge(m, src)
+}
+func (m *UserAuthorizedCompaniesRequest) XXX_Size() int {
+	return xxx_messageInfo_UserAuthorizedCompaniesRequest.Size(m)
+}
+func (m *UserAuthorizedCompaniesRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UserAuthorizedCompaniesRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UserAuthorizedCompaniesRequest proto.InternalMessageInfo
+
+func (m *UserAuthorizedCompaniesRequest) GetUserId() string {
+	if m != nil {
+		return m.UserId
+	}
+	return ""
+}
+
+func (m *UserAuthorizedCompaniesRequest) GetCompanyId() string {
+	if m != nil {
+		return m.CompanyId
+	}
+	return ""
+}
+
+// Response message listing users authorized companies
+type UserAuthorizedCompaniesResponse struct {
+	UserId               string     `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	CompanyId            string     `protobuf:"bytes,2,opt,name=companyId,proto3" json:"companyId,omitempty"`
+	Acknack              bool       `protobuf:"varint,3,opt,name=acknack,proto3" json:"acknack,omitempty"`
+	Comments             string     `protobuf:"bytes,4,opt,name=comments,proto3" json:"comments,omitempty"`
+	Companies            []*Company `protobuf:"bytes,5,rep,name=companies,proto3" json:"companies,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
+}
+
+func (m *UserAuthorizedCompaniesResponse) Reset()         { *m = UserAuthorizedCompaniesResponse{} }
+func (m *UserAuthorizedCompaniesResponse) String() string { return proto.CompactTextString(m) }
+func (*UserAuthorizedCompaniesResponse) ProtoMessage()    {}
+func (*UserAuthorizedCompaniesResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f486cd898f074c5b, []int{11}
+}
+
+func (m *UserAuthorizedCompaniesResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UserAuthorizedCompaniesResponse.Unmarshal(m, b)
+}
+func (m *UserAuthorizedCompaniesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UserAuthorizedCompaniesResponse.Marshal(b, m, deterministic)
+}
+func (m *UserAuthorizedCompaniesResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UserAuthorizedCompaniesResponse.Merge(m, src)
+}
+func (m *UserAuthorizedCompaniesResponse) XXX_Size() int {
+	return xxx_messageInfo_UserAuthorizedCompaniesResponse.Size(m)
+}
+func (m *UserAuthorizedCompaniesResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_UserAuthorizedCompaniesResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UserAuthorizedCompaniesResponse proto.InternalMessageInfo
+
+func (m *UserAuthorizedCompaniesResponse) GetUserId() string {
+	if m != nil {
+		return m.UserId
+	}
+	return ""
+}
+
+func (m *UserAuthorizedCompaniesResponse) GetCompanyId() string {
+	if m != nil {
+		return m.CompanyId
+	}
+	return ""
+}
+
+func (m *UserAuthorizedCompaniesResponse) GetAcknack() bool {
+	if m != nil {
+		return m.Acknack
+	}
+	return false
+}
+
+func (m *UserAuthorizedCompaniesResponse) GetComments() string {
+	if m != nil {
+		return m.Comments
+	}
+	return ""
+}
+
+func (m *UserAuthorizedCompaniesResponse) GetCompanies() []*Company {
+	if m != nil {
+		return m.Companies
+	}
+	return nil
+}
+
+//  Holds the company type that the user has access to
+type Company struct {
+	Company              string   `protobuf:"bytes,1,opt,name=company,proto3" json:"company,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Company) Reset()         { *m = Company{} }
+func (m *Company) String() string { return proto.CompactTextString(m) }
+func (*Company) ProtoMessage()    {}
+func (*Company) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f486cd898f074c5b, []int{12}
+}
+
+func (m *Company) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Company.Unmarshal(m, b)
+}
+func (m *Company) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Company.Marshal(b, m, deterministic)
+}
+func (m *Company) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Company.Merge(m, src)
+}
+func (m *Company) XXX_Size() int {
+	return xxx_messageInfo_Company.Size(m)
+}
+func (m *Company) XXX_DiscardUnknown() {
+	xxx_messageInfo_Company.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Company proto.InternalMessageInfo
+
+func (m *Company) GetCompany() string {
+	if m != nil {
+		return m.Company
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*EmptyParameter)(nil), "userAuthorizationEngine_grpc_api.EmptyParameter")
 	proto.RegisterType((*AckNackResponse)(nil), "userAuthorizationEngine_grpc_api.AckNackResponse")
 	proto.RegisterType((*UserAuthorizationRequest)(nil), "userAuthorizationEngine_grpc_api.UserAuthorizationRequest")
 	proto.RegisterType((*UserAuthorizationResponse)(nil), "userAuthorizationEngine_grpc_api.UserAuthorizationResponse")
+	proto.RegisterType((*UserAuthorizedAccountsRequest)(nil), "userAuthorizationEngine_grpc_api.UserAuthorizedAccountsRequest")
+	proto.RegisterType((*UserAuthorizedAccountsResponse)(nil), "userAuthorizationEngine_grpc_api.UserAuthorizedAccountsResponse")
+	proto.RegisterType((*Account)(nil), "userAuthorizationEngine_grpc_api.Account")
+	proto.RegisterType((*UserAuthorizedAccountTypesRequest)(nil), "userAuthorizationEngine_grpc_api.UserAuthorizedAccountTypesRequest")
+	proto.RegisterType((*UserAuthorizedAccountTypesResponse)(nil), "userAuthorizationEngine_grpc_api.UserAuthorizedAccountTypesResponse")
+	proto.RegisterType((*AccountType)(nil), "userAuthorizationEngine_grpc_api.AccountType")
+	proto.RegisterType((*UserAuthorizedCompaniesRequest)(nil), "userAuthorizationEngine_grpc_api.UserAuthorizedCompaniesRequest")
+	proto.RegisterType((*UserAuthorizedCompaniesResponse)(nil), "userAuthorizationEngine_grpc_api.UserAuthorizedCompaniesResponse")
+	proto.RegisterType((*Company)(nil), "userAuthorizationEngine_grpc_api.Company")
 }
 
 func init() {
@@ -246,31 +738,45 @@ func init() {
 }
 
 var fileDescriptor_f486cd898f074c5b = []byte{
-	// 371 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x93, 0xc1, 0x6e, 0xda, 0x40,
-	0x10, 0x86, 0x31, 0x50, 0x0a, 0x53, 0xa9, 0x45, 0x7b, 0xa8, 0x5c, 0x84, 0x5a, 0xcb, 0x87, 0x8a,
-	0x13, 0x6a, 0x93, 0x5b, 0x72, 0xb2, 0x12, 0x84, 0x9c, 0x43, 0x14, 0x19, 0x72, 0x46, 0x9b, 0xf5,
-	0x08, 0x2c, 0xdb, 0xbb, 0x9b, 0xf5, 0x3a, 0x84, 0x3c, 0x41, 0x2e, 0x79, 0x84, 0xbc, 0x41, 0x5e,
-	0x20, 0x6f, 0x17, 0x61, 0x4c, 0x30, 0x10, 0x64, 0x29, 0x37, 0xff, 0x33, 0xb3, 0x3b, 0xbf, 0xbf,
-	0x99, 0x85, 0xbf, 0x69, 0x82, 0xca, 0x49, 0xf5, 0x4c, 0xa8, 0xe0, 0x81, 0xea, 0x40, 0xf0, 0x01,
-	0x9f, 0x06, 0x1c, 0x27, 0x53, 0x25, 0xd9, 0x84, 0xca, 0xa0, 0x2f, 0x95, 0xd0, 0x82, 0x58, 0x65,
-	0x75, 0x76, 0x1b, 0xbe, 0x0f, 0x62, 0xa9, 0x17, 0x57, 0x54, 0xd1, 0x18, 0x35, 0x2a, 0x7b, 0x08,
-	0x3f, 0x1c, 0x16, 0x5e, 0x52, 0x16, 0x7a, 0x98, 0x48, 0xc1, 0x13, 0x24, 0x26, 0x7c, 0xa5, 0x2c,
-	0xe4, 0x94, 0x85, 0xa6, 0x61, 0x19, 0xbd, 0xa6, 0xb7, 0x96, 0xa4, 0x03, 0x4d, 0x26, 0xe2, 0x18,
-	0xb9, 0x4e, 0xcc, 0xaa, 0x65, 0xf4, 0x5a, 0xde, 0xbb, 0xb6, 0x5f, 0x0c, 0x30, 0xaf, 0x77, 0xfb,
-	0x7b, 0x78, 0x9b, 0x62, 0xa2, 0xc9, 0x4f, 0x68, 0x2c, 0xbd, 0xb9, 0x7e, 0x76, 0x63, 0xcb, 0xcb,
-	0x15, 0xe9, 0x42, 0x8b, 0x89, 0x58, 0x52, 0xbe, 0x70, 0xfd, 0xfc, 0xc6, 0x4d, 0x80, 0xfc, 0x06,
-	0x60, 0x34, 0x8a, 0x02, 0x3e, 0x75, 0x64, 0x60, 0xd6, 0xb2, 0x74, 0x21, 0xb2, 0x32, 0xca, 0x44,
-	0xca, 0xb5, 0x59, 0xcf, 0x92, 0x6b, 0x49, 0x2c, 0xf8, 0x96, 0x7f, 0x8e, 0x17, 0x12, 0xcd, 0x2f,
-	0x59, 0xb6, 0x18, 0xb2, 0x9f, 0x0d, 0xf8, 0xf5, 0x81, 0xdd, 0x1c, 0xc1, 0x05, 0x64, 0x2c, 0xdd,
-	0xc4, 0x89, 0x22, 0x31, 0x47, 0x7f, 0x2c, 0x06, 0xf7, 0xc8, 0x52, 0x8d, 0x67, 0x1b, 0x3f, 0x2b,
-	0x36, 0xa5, 0x75, 0x45, 0x9c, 0xb5, 0xc3, 0x38, 0xeb, 0xdb, 0x38, 0x8f, 0x5e, 0xab, 0xd0, 0xdd,
-	0x1b, 0xe7, 0x50, 0x49, 0x36, 0x42, 0x75, 0x17, 0x30, 0x24, 0x4f, 0x06, 0xb4, 0xdd, 0xa4, 0xf8,
-	0x0b, 0xe8, 0x93, 0x93, 0x7e, 0xe9, 0xaa, 0x1c, 0x9a, 0x51, 0xe7, 0xf4, 0x53, 0x67, 0x57, 0xc0,
-	0xec, 0x0a, 0x79, 0x34, 0xe0, 0xcf, 0x68, 0x96, 0xea, 0x73, 0x31, 0xe7, 0x7b, 0x75, 0x4b, 0xd3,
-	0xa8, 0xc8, 0xbf, 0xf2, 0x16, 0xdb, 0xeb, 0xd9, 0xf9, 0x5f, 0x7e, 0x62, 0x67, 0x7d, 0xed, 0xca,
-	0x4d, 0x23, 0x7b, 0x0e, 0xc7, 0x6f, 0x01, 0x00, 0x00, 0xff, 0xff, 0xce, 0x99, 0xdb, 0x93, 0x38,
-	0x03, 0x00, 0x00,
+	// 594 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x56, 0xcd, 0x6e, 0x13, 0x31,
+	0x10, 0xae, 0x49, 0x9b, 0x26, 0x13, 0x04, 0x95, 0x0f, 0x68, 0x59, 0x42, 0x13, 0x8c, 0x84, 0xc2,
+	0x81, 0x02, 0xe5, 0x06, 0x07, 0x58, 0xa5, 0x51, 0x14, 0x84, 0x10, 0x6c, 0x5b, 0x24, 0x4e, 0xd5,
+	0xe2, 0x58, 0xa9, 0x95, 0xc4, 0x5e, 0xd6, 0x5e, 0x4a, 0x78, 0x02, 0x2e, 0x3c, 0x02, 0x17, 0x24,
+	0x6e, 0x88, 0x2b, 0x0f, 0x82, 0xc4, 0x0b, 0xf0, 0x22, 0x68, 0x37, 0xce, 0x66, 0xf3, 0x47, 0x9a,
+	0xec, 0xa1, 0xb7, 0x9d, 0xf1, 0xfa, 0xf3, 0x37, 0x9f, 0xbf, 0x19, 0x19, 0xee, 0x84, 0x8a, 0x05,
+	0x4e, 0xa8, 0x4f, 0x65, 0xc0, 0x3f, 0x79, 0x9a, 0x4b, 0xd1, 0x10, 0x1d, 0x2e, 0xd8, 0x49, 0x27,
+	0xf0, 0xe9, 0x89, 0xe7, 0xf3, 0x3d, 0x3f, 0x90, 0x5a, 0xe2, 0xea, 0xb2, 0xff, 0xc8, 0x0e, 0x5c,
+	0x69, 0xf4, 0x7d, 0x3d, 0x78, 0xe5, 0x05, 0x5e, 0x9f, 0x69, 0x16, 0x90, 0x26, 0x5c, 0x75, 0x68,
+	0xf7, 0xa5, 0x47, 0xbb, 0x2e, 0x53, 0xbe, 0x14, 0x8a, 0x61, 0x0b, 0xb6, 0x3d, 0xda, 0x15, 0x1e,
+	0xed, 0x5a, 0xa8, 0x8a, 0x6a, 0x05, 0x77, 0x14, 0x62, 0x1b, 0x0a, 0x54, 0xf6, 0xfb, 0x4c, 0x68,
+	0x65, 0x5d, 0xaa, 0xa2, 0x5a, 0xd1, 0x4d, 0x62, 0xf2, 0x03, 0x81, 0x75, 0x3c, 0x7d, 0xbe, 0xcb,
+	0xde, 0x87, 0x4c, 0x69, 0x7c, 0x0d, 0xf2, 0x11, 0xb7, 0x56, 0x3b, 0x46, 0x2c, 0xba, 0x26, 0xc2,
+	0x65, 0x28, 0x52, 0xd9, 0xf7, 0x3d, 0x31, 0x68, 0xb5, 0x0d, 0xe2, 0x38, 0x81, 0x77, 0x01, 0xa8,
+	0xd7, 0xeb, 0x71, 0xd1, 0x71, 0x7c, 0x6e, 0xe5, 0xe2, 0xe5, 0x54, 0x66, 0x48, 0x94, 0xca, 0x50,
+	0x68, 0x6b, 0x33, 0x5e, 0x1c, 0x85, 0xb8, 0x0a, 0x25, 0xf3, 0x79, 0x34, 0xf0, 0x99, 0xb5, 0x15,
+	0xaf, 0xa6, 0x53, 0xe4, 0x2b, 0x82, 0xeb, 0x73, 0xe8, 0x1a, 0x09, 0x9e, 0x43, 0xac, 0x65, 0x4b,
+	0x39, 0xbd, 0x9e, 0x3c, 0x63, 0xed, 0x23, 0xd9, 0xf8, 0xc8, 0x68, 0xa8, 0x59, 0x7d, 0xcc, 0x67,
+	0xa8, 0xcd, 0xd2, 0xff, 0xd2, 0x72, 0xe6, 0x16, 0xcb, 0xb9, 0x39, 0x25, 0xe7, 0x31, 0xdc, 0x4c,
+	0xd3, 0x63, 0x6d, 0x67, 0x48, 0x5e, 0x65, 0x92, 0x94, 0xfc, 0x46, 0xb0, 0xbb, 0x08, 0xd7, 0xd4,
+	0xbe, 0xde, 0x5d, 0xad, 0x55, 0x25, 0x6e, 0x40, 0xc1, 0x5c, 0x8a, 0xb2, 0xb6, 0xaa, 0xb9, 0x5a,
+	0x69, 0xff, 0xee, 0xde, 0x52, 0xb3, 0x1b, 0xc6, 0x6e, 0xb2, 0x95, 0xdc, 0x86, 0x6d, 0x93, 0x4c,
+	0x7b, 0x02, 0x4d, 0x78, 0x82, 0xbc, 0x85, 0x5b, 0x73, 0x2b, 0x8f, 0xec, 0x90, 0x51, 0xd5, 0xbf,
+	0x08, 0xc8, 0xff, 0xb0, 0x2f, 0x40, 0xd9, 0xd7, 0x70, 0x39, 0x65, 0xf7, 0x91, 0xba, 0xf7, 0xce,
+	0xad, 0x6e, 0xb4, 0xcb, 0x9d, 0x80, 0x20, 0xf7, 0xa1, 0x94, 0x5a, 0x9c, 0xee, 0x31, 0x34, 0xdb,
+	0x63, 0x6f, 0xa6, 0xbd, 0x56, 0x8f, 0x8b, 0xe2, 0x59, 0xe5, 0xfe, 0x83, 0xa0, 0xb2, 0x10, 0xf8,
+	0x02, 0xb4, 0x6e, 0x8e, 0x30, 0x39, 0x5b, 0xc1, 0xc6, 0x43, 0xce, 0x03, 0x77, 0xbc, 0x37, 0xf2,
+	0xb1, 0xc9, 0x46, 0x4c, 0x0c, 0xad, 0x91, 0x8f, 0x4d, 0xb8, 0xff, 0x2b, 0x0f, 0xe5, 0x19, 0xf0,
+	0x66, 0xe0, 0xd3, 0x43, 0x16, 0x7c, 0xe0, 0x94, 0xe1, 0x2f, 0x08, 0x76, 0x5a, 0x6a, 0x52, 0x20,
+	0xfc, 0x78, 0x39, 0xa1, 0x45, 0xd3, 0xdb, 0x7e, 0xb2, 0xd6, 0xde, 0xe1, 0x45, 0x90, 0x0d, 0xfc,
+	0x0d, 0xc1, 0x8d, 0x17, 0x5c, 0xe9, 0xe8, 0x1f, 0x35, 0x3b, 0x78, 0xf0, 0xd3, 0xd5, 0xe0, 0x67,
+	0x46, 0xa1, 0xfd, 0x6c, 0x7d, 0x80, 0x84, 0xe4, 0x4f, 0x04, 0x95, 0xc5, 0x24, 0xe3, 0x06, 0xc0,
+	0xf5, 0x35, 0xcf, 0x49, 0x4f, 0x18, 0xfb, 0x20, 0x1b, 0x48, 0x42, 0xf8, 0x3b, 0x82, 0xf2, 0x1c,
+	0xc2, 0x49, 0x27, 0xe0, 0x95, 0x55, 0x99, 0xee, 0x4e, 0xdb, 0xc9, 0x80, 0x90, 0xf0, 0xfc, 0x8c,
+	0xa0, 0x72, 0x78, 0x1a, 0xea, 0x03, 0x79, 0x26, 0x66, 0x5c, 0x12, 0x59, 0x96, 0x05, 0xf8, 0xc1,
+	0xf2, 0x83, 0x26, 0x9f, 0x2d, 0xf6, 0xc3, 0xf3, 0x0c, 0xb2, 0x89, 0x67, 0x0d, 0xd9, 0x78, 0x97,
+	0x8f, 0x9f, 0x49, 0x8f, 0xfe, 0x05, 0x00, 0x00, 0xff, 0xff, 0xbd, 0x31, 0xca, 0xf7, 0x50, 0x09,
+	0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -287,6 +793,12 @@ const _ = grpc.SupportPackageIsVersion4
 type UserAuthorizationGrpcServiceClient interface {
 	// Do a user have the correct rights to execute a specific API
 	IsUserAuthorized(ctx context.Context, in *UserAuthorizationRequest, opts ...grpc.CallOption) (*UserAuthorizationResponse, error)
+	// List users authorized accounts
+	ListUsersAuthorizedAccounts(ctx context.Context, in *UserAuthorizedAccountsRequest, opts ...grpc.CallOption) (*UserAuthorizedAccountsResponse, error)
+	// List users authorized account types
+	ListUsersAuthorizedAccountTypes(ctx context.Context, in *UserAuthorizedAccountTypesRequest, opts ...grpc.CallOption) (*UserAuthorizedAccountTypesResponse, error)
+	// List users authorized companies
+	ListUsersAuthorizedCompanies(ctx context.Context, in *UserAuthorizedCompaniesRequest, opts ...grpc.CallOption) (*UserAuthorizedCompaniesResponse, error)
 	// Shutdown server in a controlled way
 	ShutDownUserAuthorizationServer(ctx context.Context, in *EmptyParameter, opts ...grpc.CallOption) (*AckNackResponse, error)
 }
@@ -308,6 +820,33 @@ func (c *userAuthorizationGrpcServiceClient) IsUserAuthorized(ctx context.Contex
 	return out, nil
 }
 
+func (c *userAuthorizationGrpcServiceClient) ListUsersAuthorizedAccounts(ctx context.Context, in *UserAuthorizedAccountsRequest, opts ...grpc.CallOption) (*UserAuthorizedAccountsResponse, error) {
+	out := new(UserAuthorizedAccountsResponse)
+	err := c.cc.Invoke(ctx, "/userAuthorizationEngine_grpc_api.userAuthorizationGrpcService/ListUsersAuthorizedAccounts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAuthorizationGrpcServiceClient) ListUsersAuthorizedAccountTypes(ctx context.Context, in *UserAuthorizedAccountTypesRequest, opts ...grpc.CallOption) (*UserAuthorizedAccountTypesResponse, error) {
+	out := new(UserAuthorizedAccountTypesResponse)
+	err := c.cc.Invoke(ctx, "/userAuthorizationEngine_grpc_api.userAuthorizationGrpcService/ListUsersAuthorizedAccountTypes", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userAuthorizationGrpcServiceClient) ListUsersAuthorizedCompanies(ctx context.Context, in *UserAuthorizedCompaniesRequest, opts ...grpc.CallOption) (*UserAuthorizedCompaniesResponse, error) {
+	out := new(UserAuthorizedCompaniesResponse)
+	err := c.cc.Invoke(ctx, "/userAuthorizationEngine_grpc_api.userAuthorizationGrpcService/ListUsersAuthorizedCompanies", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userAuthorizationGrpcServiceClient) ShutDownUserAuthorizationServer(ctx context.Context, in *EmptyParameter, opts ...grpc.CallOption) (*AckNackResponse, error) {
 	out := new(AckNackResponse)
 	err := c.cc.Invoke(ctx, "/userAuthorizationEngine_grpc_api.userAuthorizationGrpcService/ShutDownUserAuthorizationServer", in, out, opts...)
@@ -321,6 +860,12 @@ func (c *userAuthorizationGrpcServiceClient) ShutDownUserAuthorizationServer(ctx
 type UserAuthorizationGrpcServiceServer interface {
 	// Do a user have the correct rights to execute a specific API
 	IsUserAuthorized(context.Context, *UserAuthorizationRequest) (*UserAuthorizationResponse, error)
+	// List users authorized accounts
+	ListUsersAuthorizedAccounts(context.Context, *UserAuthorizedAccountsRequest) (*UserAuthorizedAccountsResponse, error)
+	// List users authorized account types
+	ListUsersAuthorizedAccountTypes(context.Context, *UserAuthorizedAccountTypesRequest) (*UserAuthorizedAccountTypesResponse, error)
+	// List users authorized companies
+	ListUsersAuthorizedCompanies(context.Context, *UserAuthorizedCompaniesRequest) (*UserAuthorizedCompaniesResponse, error)
 	// Shutdown server in a controlled way
 	ShutDownUserAuthorizationServer(context.Context, *EmptyParameter) (*AckNackResponse, error)
 }
@@ -331,6 +876,15 @@ type UnimplementedUserAuthorizationGrpcServiceServer struct {
 
 func (*UnimplementedUserAuthorizationGrpcServiceServer) IsUserAuthorized(ctx context.Context, req *UserAuthorizationRequest) (*UserAuthorizationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IsUserAuthorized not implemented")
+}
+func (*UnimplementedUserAuthorizationGrpcServiceServer) ListUsersAuthorizedAccounts(ctx context.Context, req *UserAuthorizedAccountsRequest) (*UserAuthorizedAccountsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUsersAuthorizedAccounts not implemented")
+}
+func (*UnimplementedUserAuthorizationGrpcServiceServer) ListUsersAuthorizedAccountTypes(ctx context.Context, req *UserAuthorizedAccountTypesRequest) (*UserAuthorizedAccountTypesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUsersAuthorizedAccountTypes not implemented")
+}
+func (*UnimplementedUserAuthorizationGrpcServiceServer) ListUsersAuthorizedCompanies(ctx context.Context, req *UserAuthorizedCompaniesRequest) (*UserAuthorizedCompaniesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUsersAuthorizedCompanies not implemented")
 }
 func (*UnimplementedUserAuthorizationGrpcServiceServer) ShutDownUserAuthorizationServer(ctx context.Context, req *EmptyParameter) (*AckNackResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ShutDownUserAuthorizationServer not implemented")
@@ -354,6 +908,60 @@ func _UserAuthorizationGrpcService_IsUserAuthorized_Handler(srv interface{}, ctx
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserAuthorizationGrpcServiceServer).IsUserAuthorized(ctx, req.(*UserAuthorizationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAuthorizationGrpcService_ListUsersAuthorizedAccounts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserAuthorizedAccountsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAuthorizationGrpcServiceServer).ListUsersAuthorizedAccounts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/userAuthorizationEngine_grpc_api.userAuthorizationGrpcService/ListUsersAuthorizedAccounts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAuthorizationGrpcServiceServer).ListUsersAuthorizedAccounts(ctx, req.(*UserAuthorizedAccountsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAuthorizationGrpcService_ListUsersAuthorizedAccountTypes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserAuthorizedAccountTypesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAuthorizationGrpcServiceServer).ListUsersAuthorizedAccountTypes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/userAuthorizationEngine_grpc_api.userAuthorizationGrpcService/ListUsersAuthorizedAccountTypes",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAuthorizationGrpcServiceServer).ListUsersAuthorizedAccountTypes(ctx, req.(*UserAuthorizedAccountTypesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserAuthorizationGrpcService_ListUsersAuthorizedCompanies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserAuthorizedCompaniesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserAuthorizationGrpcServiceServer).ListUsersAuthorizedCompanies(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/userAuthorizationEngine_grpc_api.userAuthorizationGrpcService/ListUsersAuthorizedCompanies",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserAuthorizationGrpcServiceServer).ListUsersAuthorizedCompanies(ctx, req.(*UserAuthorizedCompaniesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -383,6 +991,18 @@ var _UserAuthorizationGrpcService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "IsUserAuthorized",
 			Handler:    _UserAuthorizationGrpcService_IsUserAuthorized_Handler,
+		},
+		{
+			MethodName: "ListUsersAuthorizedAccounts",
+			Handler:    _UserAuthorizationGrpcService_ListUsersAuthorizedAccounts_Handler,
+		},
+		{
+			MethodName: "ListUsersAuthorizedAccountTypes",
+			Handler:    _UserAuthorizationGrpcService_ListUsersAuthorizedAccountTypes_Handler,
+		},
+		{
+			MethodName: "ListUsersAuthorizedCompanies",
+			Handler:    _UserAuthorizationGrpcService_ListUsersAuthorizedCompanies_Handler,
 		},
 		{
 			MethodName: "ShutDownUserAuthorizationServer",
