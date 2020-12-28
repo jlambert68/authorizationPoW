@@ -18,12 +18,67 @@ func (secretMessageGenerator_GrpcServer *secretMessageGenerator_GrpcServerStruct
 
 	//
 	var returnMessage *secretMessageGenerator_grpc_api.GenerateSecretFromInputResponse
+	var appendedSecretAsStringToHash string
+	var secretType string
 
 	// Internal Secret data used for creating the public secret
 	secretPart := "00c164e0-526e-4fe7-b20a-527cd0f961a1"
-	secretToHash := secretPart + generateSecretFromInputRequest.UserId + generateSecretFromInputRequest.MessageUsedForSecret
-	producedSecret := sha256.Sum256([]byte(secretToHash))
-	a := producedSecret[:]
+
+	// Generate part 1 of secret hash
+	appendedSecretAsStringToHash = secretPart + generateSecretFromInputRequest.UserId + generateSecretFromInputRequest.Company
+	appendedSecret := sha256.Sum256([]byte(appendedSecretAsStringToHash))
+	appendedSecretAsStringToHash = string(appendedSecret[:])
+
+	// Generate part 2
+	secretType = "Account:"
+	if len(generateSecretFromInputRequest.Accounts) == 0 {
+		appendedSecretAsStringToHash = appendedSecretAsStringToHash + secretType
+		appendedSecret := sha256.Sum256([]byte(appendedSecretAsStringToHash))
+		appendedSecretAsStringToHash = string(appendedSecret[:])
+
+	} else {
+
+		for _, account := range generateSecretFromInputRequest.GetAccounts() {
+			appendedSecretAsStringToHash = appendedSecretAsStringToHash + secretType + account.Account
+			appendedSecret := sha256.Sum256([]byte(appendedSecretAsStringToHash))
+			appendedSecretAsStringToHash = string(appendedSecret[:])
+		}
+	}
+
+	// Generate part 3
+	secretType = "AccountType:"
+	if len(generateSecretFromInputRequest.Accounts) == 0 {
+		appendedSecretAsStringToHash = appendedSecretAsStringToHash + secretType
+		appendedSecret := sha256.Sum256([]byte(appendedSecretAsStringToHash))
+		appendedSecretAsStringToHash = string(appendedSecret[:])
+
+	} else {
+
+		for _, accountType := range generateSecretFromInputRequest.GetAccountTypes() {
+			appendedSecretAsStringToHash = appendedSecretAsStringToHash + secretType + accountType.AccountType
+			appendedSecret := sha256.Sum256([]byte(appendedSecretAsStringToHash))
+			appendedSecretAsStringToHash = string(appendedSecret[:])
+		}
+	}
+
+	// Generate part 4
+	secretType = "Company:"
+	if len(generateSecretFromInputRequest.Accounts) == 0 {
+		appendedSecretAsStringToHash = appendedSecretAsStringToHash + secretType
+		appendedSecret := sha256.Sum256([]byte(appendedSecretAsStringToHash))
+		appendedSecretAsStringToHash = string(appendedSecret[:])
+
+	} else {
+
+		for _, company := range generateSecretFromInputRequest.GetCompanies() {
+			appendedSecretAsStringToHash = appendedSecretAsStringToHash + secretType + company.Company
+			appendedSecret := sha256.Sum256([]byte(appendedSecretAsStringToHash))
+			appendedSecretAsStringToHash = string(appendedSecret[:])
+		}
+	}
+
+	// Generate final hash
+	a := appendedSecret[:]
 	producedSecretString := hex.EncodeToString(a)
 
 	// Create return message
@@ -36,7 +91,7 @@ func (secretMessageGenerator_GrpcServer *secretMessageGenerator_GrpcServerStruct
 	secretMessageGeneratorServerObject.logger.WithFields(logrus.Fields{
 		"id":            "8ba74bad-a3c9-4018-b0c3-d26593d30f9f",
 		"returnMessage": returnMessage,
-	}).Debug("Leaveing 'GenerateSecretFromInput'")
+	}).Debug("Leaving 'GenerateSecretFromInput'")
 
 	return returnMessage, nil
 
@@ -67,7 +122,7 @@ func (secretMessageGenerator_GrpcServer *secretMessageGenerator_GrpcServerStruct
 	secretMessageGeneratorServerObject.logger.WithFields(logrus.Fields{
 		"id":            "9fe67ea7-c903-42de-8029-7811aa8a0a12",
 		"returnMessage": returnMessage,
-	}).Debug("Leaveing 'ShutDownsecretMessageGeneratorServer'")
+	}).Debug("Leaving 'ShutDownsecretMessageGeneratorServer'")
 
 	// Start shut shutdown after leaving this method
 	defer func() {

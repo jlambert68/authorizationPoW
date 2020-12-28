@@ -37,15 +37,10 @@ type userRequests_GrpcServerStruct struct{}
 
 /****************************************************/
 // Standard gRPC Client connect towards other gRPC server
-//--- Not needed for userRequests Server ---
-/*
-var (
-	remoteXxxGrpcServerConnection *grpc.ClientConn
-	XxxGrpcServerClient           qml_server_grpc_api.QmlGrpcServicesClient
 
-	XxxGrpcServer_address_to_dial string = common_config.XxxxServer_address + common_config.XxxxServer_port
+var (
+	remoteGrpcAuthorizationEngineServerConnection *grpc.ClientConn
 )
-*/
 
 /****************************************************/
 // Database cache object

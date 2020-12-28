@@ -2,14 +2,18 @@ package userAuthorizationEngine
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/patrickmn/go-cache"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"jlambert/authorizationPoW/common_config"
 	"jlambert/authorizationPoW/grpc_api/userAuthorizationEngine_grpc_api"
+	"log"
 	"net"
 	"os"
 	"os/signal"
+	"runtime"
+	"strings"
 	"syscall"
 	"time"
 )
@@ -75,21 +79,41 @@ func cleanup() {
 }
 
 /****************************************************/
-func userAuthorizationEngineServerMain() {
+func UserAuthorizationEngineServerMain() {
 
 	// Create a cache with a default expiration time of 5 minutes, and which
 	// purges expired items every 10 minutes
 	// Saved objects having no expiration time will never be deleted
 	databaseMemoryCache = cache.New(5*time.Minute, 10*time.Minute)
 
+	currDirectory := getCurrentDirectory()
+	var dbName, sqlName string
+	switch currDirectory {
+	case "authorizationPoW":
+		dbName = "./Database/UserAuthorizationDB.db"
+		sqlName = "./Database/UserAuthorizationDB.db - 201228.sql"
+	case "userAuthorizationEngine":
+		dbName = "./../Database/UserAuthorizationDB.db"
+		sqlName = "./../Database/UserAuthorizationDB.db - 201228.sql"
+	case "main":
+		dbName = "./../../Database/UserAuthorizationDB.db"
+		sqlName = "./../../Database/UserAuthorizationDB.db - 201228.sql"
+	default:
+		log.Fatalln("Current Directory is unknown: " + currDirectory)
+
+	}
+
 	// Set up userAuthorizationEngine-Object
 	userAuthorizationEngineServerObject = &userAuthorizationEngineServerObjectStruct{
-		databaseName: "./Database/UserAuthorizationDB.db",
-		sqlFile:      "./Database/UserAuthorizationDB.db - 201228.sql",
+		databaseName: dbName,
+		sqlFile:      sqlName,
 	}
 
 	// Initiate logger
 	userAuthorizationEngineServerObject.InitLogger("")
+
+	// Initiate database
+	userAuthorizationEngineServerObject.initializeSqlDB()
 
 	// Clean up when leaving. Is placed after logger because shutdown logs information
 	defer cleanup()
@@ -180,4 +204,24 @@ func (userAuthorizationEngineServerObject *userAuthorizationEngineServerObjectSt
 	}).Info("Close net.Listing")
 	_ = lis.Close()
 
+}
+
+func getCurrentDirectory() string {
+	dir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(dir)
+	var ss []string
+	if runtime.GOOS == "windows" {
+		ss = strings.Split(dir, "\\")
+	} else {
+		ss = strings.Split(dir, "/")
+	}
+
+	currentDirName := ss[len(ss)-1]
+
+	fmt.Println("Current Directory Name: ", currentDirName)
+
+	return currentDirName
 }

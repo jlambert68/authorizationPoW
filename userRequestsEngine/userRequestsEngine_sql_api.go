@@ -5,20 +5,20 @@ import (
 	_ "github.com/mattn/go-sqlite3" // Import go-sqlite3 library
 	"github.com/sirupsen/logrus"
 	"io/ioutil"
+	"jlambert/authorizationPoW/grpc_api/userAuthorizationEngine_grpc_api"
 	"jlambert/authorizationPoW/grpc_api/userRequests_grpc_api"
 	"os"
 )
 
 /****************************************************/
 // Execute user request: 'ListAccounts (ListAccountsRequest) returns (ListAccountsResponse)'
-func (userRequestsServerObject *userRequestsServerObjectStruct) sqlListAccounts(listAccountsRequest *userRequests_grpc_api.ListAccountsRequest, allowedUsersAccounts []string) *userRequests_grpc_api.ListAccountsResponse {
+func (userRequestsServerObject *userRequestsServerObjectStruct) sqlListAccounts(listAccountsRequest *userRequests_grpc_api.ListAccountsRequest, allowedUsersAccounts userAuthorizationEngine_grpc_api.UserAuthorizedAccountsResponse) *userRequests_grpc_api.ListAccountsResponse {
 	var err error
 	var accountsList string = ""
 	var returnMessage *userRequests_grpc_api.ListAccountsResponse
 
-	// Convert User Allowed Accounts into a string
 	// If user doesn't has access to any accounts then exit with empty result set
-	if len(allowedUsersAccounts) == 0 {
+	if len(allowedUsersAccounts.Accounts) == 0 {
 		returnMessage = &userRequests_grpc_api.ListAccountsResponse{
 			UserId:    listAccountsRequest.UserId,
 			CompanyId: listAccountsRequest.CompanyId,
@@ -31,11 +31,12 @@ func (userRequestsServerObject *userRequestsServerObjectStruct) sqlListAccounts(
 		return returnMessage
 
 	} else {
-		for accountPosition, account := range allowedUsersAccounts {
+		// Convert User Allowed Accounts into a string
+		for accountPosition, account := range allowedUsersAccounts.GetAccounts() {
 			if accountPosition == 0 {
-				accountsList = "'" + account + "'"
+				accountsList = "'" + account.Account + "'"
 			} else {
-				accountsList = accountsList + "," + "'" + account + "'"
+				accountsList = accountsList + "," + "'" + account.Account + "'"
 			}
 		}
 	}

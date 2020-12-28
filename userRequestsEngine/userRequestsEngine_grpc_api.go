@@ -3,6 +3,7 @@ package userRequestsEngine
 import (
 	"context"
 	"github.com/sirupsen/logrus"
+	"jlambert/authorizationPoW/grpc_api/userAuthorizationEngine_grpc_api"
 	"jlambert/authorizationPoW/grpc_api/userRequests_grpc_api"
 )
 
@@ -34,16 +35,22 @@ func (userRequests_GrpcServer *userRequests_GrpcServerStruct) ListAccounts(ctx c
 
 	} else {
 		// User has access to function
-		// TODO generate list of accounts that user
-		usersAccounts := []string{"283592388-31", "12412412-31"}
+		// Generate list of authorized accounts for user
+		userAuthorizedAccountsRequest := userAuthorizationEngine_grpc_api.UserAuthorizedAccountsRequest{
+			UserId:    listAccountsRequest.UserId,
+			CompanyId: listAccountsRequest.CompanyId,
+		}
+		usersAccounts := userRequestsServerObject.getUserAuthorizedAccounts(userAuthorizedAccountsRequest)
+
+		//usersAccounts := []string{"283592388-31", "12412412-31"}
 
 		// Create return message based on SQL question
-		returnMessage = userRequestsServerObject.sqlListAccounts(listAccountsRequest, usersAccounts)
+		returnMessage = userRequestsServerObject.sqlListAccounts(listAccountsRequest, *usersAccounts)
 
 		userRequestsServerObject.logger.WithFields(logrus.Fields{
 			"id":            "8ba74bad-a3c9-4018-b0c3-d26593d30f9f",
 			"returnMessage": returnMessage,
-		}).Debug("Leaveing 'ListAccounts'")
+		}).Debug("Leaving 'ListAccounts'")
 
 		return returnMessage, nil
 	}
@@ -73,7 +80,7 @@ func (userRequests_GrpcServer *userRequests_GrpcServerStruct) ListAccountsBaseOn
 	userRequestsServerObject.logger.WithFields(logrus.Fields{
 		"id":            "842a4db2-864d-4154-a714-a0f52f41f56f",
 		"returnMessage": returnMessage,
-	}).Debug("Leaveing 'ListAccountsBasedOnProvidedTypeRequest'")
+	}).Debug("Leaving 'ListAccountsBasedOnProvidedTypeRequest'")
 
 	return returnMessage, nil
 
@@ -101,7 +108,7 @@ func (userRequests_GrpcServer *userRequests_GrpcServerStruct) AddAccount(ctx con
 	userRequestsServerObject.logger.WithFields(logrus.Fields{
 		"id":            "4f6f0064-a4fe-45b6-961d-e275baf5a097",
 		"returnMessage": returnMessage,
-	}).Debug("Leaveing 'AddAccount'")
+	}).Debug("Leaving 'AddAccount'")
 
 	return returnMessage, nil
 
@@ -129,7 +136,7 @@ func (userRequests_GrpcServer *userRequests_GrpcServerStruct) DeleteAccount(ctx 
 	userRequestsServerObject.logger.WithFields(logrus.Fields{
 		"id":            "2f99bb9e-384d-4010-a826-bd67ab838351",
 		"returnMessage": returnMessage,
-	}).Debug("Leaveing 'DeleteAccount'")
+	}).Debug("Leaving 'DeleteAccount'")
 
 	return returnMessage, nil
 
@@ -157,7 +164,7 @@ func (userRequests_GrpcServer *userRequests_GrpcServerStruct) AddAccountType(ctx
 	userRequestsServerObject.logger.WithFields(logrus.Fields{
 		"id":            "a62b062b-8c05-4c0a-a828-4da9024b1b2d",
 		"returnMessage": returnMessage,
-	}).Debug("Leaveing 'AddAccountType'")
+	}).Debug("Leaving 'AddAccountType'")
 
 	return returnMessage, nil
 
@@ -185,7 +192,7 @@ func (userRequests_GrpcServer *userRequests_GrpcServerStruct) DeleteAccountType(
 	userRequestsServerObject.logger.WithFields(logrus.Fields{
 		"id":            "32e78fca-d92e-4cf9-9b49-a6f54dbff1dd",
 		"returnMessage": returnMessage,
-	}).Debug("Leaveing 'DeleteAccountType'")
+	}).Debug("Leaving 'DeleteAccountType'")
 
 	return returnMessage, nil
 
@@ -213,7 +220,7 @@ func (userRequests_GrpcServer *userRequests_GrpcServerStruct) UpdateCompanyInfor
 	userRequestsServerObject.logger.WithFields(logrus.Fields{
 		"id":            "ac412e0c-1586-4477-8a43-b43a5ad226a2",
 		"returnMessage": returnMessage,
-	}).Debug("Leaveing 'UpdateCompanyInformation'")
+	}).Debug("Leaving 'UpdateCompanyInformation'")
 
 	return returnMessage, nil
 
@@ -245,7 +252,7 @@ func (userRequests_GrpcServer *userRequests_GrpcServerStruct) ShutDownUserReques
 	userRequestsServerObject.logger.WithFields(logrus.Fields{
 		"id":            "9fe67ea7-c903-42de-8029-7811aa8a0a12",
 		"returnMessage": returnMessage,
-	}).Debug("Leaveing 'ShutDownUserRequestsServer'")
+	}).Debug("Leaving 'ShutDownUserRequestsServer'")
 
 	// Start shut shutdown after leaving this method
 	defer func() {

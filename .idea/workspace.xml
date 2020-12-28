@@ -2,15 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="75189c07-eedc-4f6e-a92c-95c2887109f9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Database/UserAuthorizationDB.db - 201228.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_sql_api.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userAuthorizationEngine/main/userAuthorizationEngine_main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userRequestsEngine/userRequestEngine_gRpcClient.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Database/CustomerAccountsDB.db" beforeDir="false" afterPath="$PROJECT_DIR$/Database/CustomerAccountsDB.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Database/UserAuthorizationDB.db" beforeDir="false" afterPath="$PROJECT_DIR$/Database/UserAuthorizationDB.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc_api/userAuthorizationEngine_grpc_api/userAuthorizationEngine_grpc_api.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/grpc_api/userAuthorizationEngine_grpc_api/userAuthorizationEngine_grpc_api.pb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc_api/userAuthorizationEngine_grpc_api/userAuthorizationEngine_grpc_api.proto" beforeDir="false" afterPath="$PROJECT_DIR$/grpc_api/userAuthorizationEngine_grpc_api/userAuthorizationEngine_grpc_api.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/a3s_simulator_engine/a3s_grpc_api.go" beforeDir="false" afterPath="$PROJECT_DIR$/a3s_simulator_engine/a3s_grpc_api.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/secretMessageGeneratorEngine/secretMessageGeneratorEngine_engine_grpc_api.go" beforeDir="false" afterPath="$PROJECT_DIR$/secretMessageGeneratorEngine/secretMessageGeneratorEngine_engine_grpc_api.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_grpc_api.go" beforeDir="false" afterPath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_grpc_api.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_server.go" beforeDir="false" afterPath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_sql_api.go" beforeDir="false" afterPath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_sql_api.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userRequestsEngine/userRequestsEngine_grpc_api.go" beforeDir="false" afterPath="$PROJECT_DIR$/userRequestsEngine/userRequestsEngine_grpc_api.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userRequestsEngine/userRequestsEngine_server.go" beforeDir="false" afterPath="$PROJECT_DIR$/userRequestsEngine/userRequestsEngine_server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userRequestsEngine/userRequestsEngine_sql_api.go" beforeDir="false" afterPath="$PROJECT_DIR$/userRequestsEngine/userRequestsEngine_sql_api.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,21 +59,12 @@
       <recent name="$PROJECT_DIR$/secretMessageGeneratorEngine" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go build userRequestsEngine_main.go">
+  <component name="RunManager" selected="Go Build.go build userAuthorizationEngine_main.go">
     <configuration name="go build main.go (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="authorizationPoW" />
       <working_directory value="$PROJECT_DIR$" />
       <kind value="FILE" />
       <filePath value="$PROJECT_DIR$/secretMessageGeneratorEngine/main/main.go" />
-      <package value="jlambert/authorizationPoW" />
-      <directory value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="authorizationPoW" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="FILE" />
-      <filePath value="$PROJECT_DIR$/a3s_simulator_engine/main/main.go" />
       <package value="jlambert/authorizationPoW" />
       <directory value="$PROJECT_DIR$" />
       <method v="2" />
@@ -93,6 +87,15 @@
       <directory value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
+    <configuration name="go build userAuthorizationEngine_main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="authorizationPoW" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/userAuthorizationEngine/main/userAuthorizationEngine_main.go" />
+      <package value="jlambert/authorizationPoW" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
     <configuration name="go build userRequestsEngine_main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="authorizationPoW" />
       <working_directory value="$PROJECT_DIR$" />
@@ -104,11 +107,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build userAuthorizationEngine_main.go" />
         <item itemvalue="Go Build.go build userRequestsEngine_main.go" />
         <item itemvalue="Go Build.go build secretMessageGenerator_main.go (1)" />
         <item itemvalue="Go Build.go build secretMessageGenerator_main.go" />
         <item itemvalue="Go Build.go build main.go (1)" />
-        <item itemvalue="Go Build.go build main.go" />
       </list>
     </recent_temporary>
   </component>
@@ -139,9 +142,61 @@
     <MESSAGE value="Basic framwork for gRPC-calls for userAuthorizationEngine working" />
     <MESSAGE value="userRequestEngine ~50% finished" />
     <MESSAGE value="userRequestEngine ~75% finished" />
-    <option name="LAST_COMMIT_MESSAGE" value="userRequestEngine ~75% finished" />
+    <MESSAGE value="userAuthorizationEngine has gor SQL to retrieve users authorized accounts, accountTypes and Companies" />
+    <option name="LAST_COMMIT_MESSAGE" value="userAuthorizationEngine has gor SQL to retrieve users authorized accounts, accountTypes and Companies" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_sql_api.go</url>
+          <line>231</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/userRequestsEngine/userRequestsEngine_sql_api.go</url>
+          <line>149</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/userRequestsEngine/userRequestEngine_gRpcClient.go</url>
+          <line>19</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/userRequestsEngine/userRequestsEngine_grpc_api.go</url>
+          <line>21</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/userRequestsEngine/userRequestsEngine_grpc_api.go</url>
+          <line>42</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_grpc_api.go</url>
+          <line>47</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_sql_api.go</url>
+          <line>91</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_sql_api.go</url>
+          <line>57</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_server.go</url>
+          <line>124</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

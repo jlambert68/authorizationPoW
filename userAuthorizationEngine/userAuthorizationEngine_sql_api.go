@@ -202,24 +202,6 @@ func (userAuthorizationServerObject *userAuthorizationEngineServerObjectStruct) 
 }
 
 /****************************************************/
-// Execute user request: 'ListAccountsBaseOnProvidedType (ListAccountsBasedOnProvidedTypeRequest) returns (ListAccountsBasedOnProvidedTypeResponse)'
-
-/****************************************************/
-// Execute user request: 'AddAccount (AddAccountRequest) returns (AddAccountResponse)'
-
-/****************************************************/
-// Execute user request: 'DeleteAccount (DeleteAccountRequest) returns (DeleteAccountResponse)'
-
-/****************************************************/
-// Execute user request: 'AddAccountType (AddAccountTypeRequest) returns (AddAccountTypeResponse)'
-
-/****************************************************/
-// Execute user request: 'DeleteAccountType (DeleteAccountTypeTypeRequest) returns (DeleteAccountTypeResponse)'
-
-/****************************************************/
-// Execute user request: 'UpdateCompanyInformation (UpdateCompanyInformationRequest) returns (UpdateCompanyInformationResponse)'
-
-/****************************************************/
 // Initiate database. If already exists then use it otherwise create a new one and fill with standardized data
 func (userAuthorizationServerObject *userAuthorizationEngineServerObjectStruct) initializeSqlDB() {
 	var err error
@@ -231,11 +213,19 @@ func (userAuthorizationServerObject *userAuthorizationEngineServerObjectStruct) 
 	if err != nil {
 		userAuthorizationServerObject.logger.WithFields(logrus.Fields{
 			"Id": "05f289a3-5804-4951-92e1-d584e4773a0c",
+			"userAuthorizationServerObject.databaseName": userAuthorizationServerObject.databaseName,
 		}).Info("Couldn't open existing database, will create a new one and fill with standardized data.")
 
 		// Create the new database with data included.
 		// That part will open the database
 		userAuthorizationServerObject.createNewDatabase()
+
+	} else {
+		// SUccess in opening database
+		userAuthorizationServerObject.logger.WithFields(logrus.Fields{
+			"Id": "04b244e7-59bf-4dbb-933d-28b350b461fa",
+			"userAuthorizationServerObject.databaseName": userAuthorizationServerObject.databaseName,
+		}).Info("Success in opening existing database")
 
 	}
 

@@ -27,7 +27,7 @@ func (userAuthorizationEngine_GrpcServer *userAuthorizationEngine_GrpcServerStru
 	userAuthorizationEngineServerObject.logger.WithFields(logrus.Fields{
 		"id":            "8ba74bad-a3c9-4018-b0c3-d26593d30f9f",
 		"returnMessage": returnMessage,
-	}).Debug("Leaveing 'UserAuthorization'")
+	}).Debug("Leaving 'UserAuthorization'")
 
 	return returnMessage, nil
 
@@ -45,18 +45,12 @@ func (userAuthorizationEngine_GrpcServer *userAuthorizationEngine_GrpcServerStru
 	var returnMessage *userAuthorizationEngine_grpc_api.UserAuthorizedAccountsResponse
 
 	// Create return message
-	returnMessage = &userAuthorizationEngine_grpc_api.UserAuthorizedAccountsResponse{
-		UserId:    userAuthorizedAccountsRequest.UserId,
-		CompanyId: userAuthorizedAccountsRequest.CompanyId,
-		Acknack:   false,
-		Comments:  "",
-		Accounts:  nil,
-	}
+	returnMessage = userAuthorizationEngineServerObject.sqlListUsersAuthorizedAccounts(userAuthorizedAccountsRequest)
 
 	userAuthorizationEngineServerObject.logger.WithFields(logrus.Fields{
 		"id":            "29693194-cd45-4f8e-8194-e14ce5a730f6",
 		"returnMessage": returnMessage,
-	}).Debug("Leaveing 'ListUsersAuthorizedAccounts'")
+	}).Debug("Leaving 'ListUsersAuthorizedAccounts'")
 
 	return returnMessage, nil
 
@@ -74,18 +68,12 @@ func (userAuthorizationEngine_GrpcServer *userAuthorizationEngine_GrpcServerStru
 	var returnMessage *userAuthorizationEngine_grpc_api.UserAuthorizedAccountTypesResponse
 
 	// Create return message
-	returnMessage = &userAuthorizationEngine_grpc_api.UserAuthorizedAccountTypesResponse{
-		UserId:       userAuthorizedAccountTypesRequest.UserId,
-		CompanyId:    userAuthorizedAccountTypesRequest.CompanyId,
-		Acknack:      false,
-		Comments:     "",
-		AccountTypes: nil,
-	}
+	returnMessage = userAuthorizationEngineServerObject.sqlListUsersAuthorizedAccountTypes(userAuthorizedAccountTypesRequest)
 
 	userAuthorizationEngineServerObject.logger.WithFields(logrus.Fields{
 		"id":            "29693194-cd45-4f8e-8194-e14ce5a730f6",
 		"returnMessage": returnMessage,
-	}).Debug("Leaveing 'ListUsersAuthorizedAccountTypes'")
+	}).Debug("Leaving 'ListUsersAuthorizedAccountTypes'")
 
 	return returnMessage, nil
 
@@ -103,17 +91,12 @@ func (userAuthorizationEngine_GrpcServer *userAuthorizationEngine_GrpcServerStru
 	var returnMessage *userAuthorizationEngine_grpc_api.UserAuthorizedCompaniesResponse
 
 	// Create return message
-	returnMessage = &userAuthorizationEngine_grpc_api.UserAuthorizedCompaniesResponse{
-		UserId:    userAuthorizedCompaniesRequest.UserId,
-		Acknack:   false,
-		Comments:  "",
-		Companies: nil,
-	}
+	returnMessage = userAuthorizationEngineServerObject.sqlListUsersAuthorizedCompanies(userAuthorizedCompaniesRequest)
 
 	userAuthorizationEngineServerObject.logger.WithFields(logrus.Fields{
 		"id":            "90670e25-fd43-4f0a-8c92-3428a1c9298c",
 		"returnMessage": returnMessage,
-	}).Debug("Leaveing 'ListUsersAuthorizedCompanies'")
+	}).Debug("Leaving 'ListUsersAuthorizedCompanies'")
 
 	return returnMessage, nil
 
@@ -144,7 +127,7 @@ func (userAuthorizationEngine_GrpcServer *userAuthorizationEngine_GrpcServerStru
 	userAuthorizationEngineServerObject.logger.WithFields(logrus.Fields{
 		"id":            "9fe67ea7-c903-42de-8029-7811aa8a0a12",
 		"returnMessage": returnMessage,
-	}).Debug("Leaveing 'ShutDownUserAuthorizationServer'")
+	}).Debug("Leaving 'ShutDownUserAuthorizationServer'")
 
 	// Start shut shutdown after leaving this method
 	defer func() {

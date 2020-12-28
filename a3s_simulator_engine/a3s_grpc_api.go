@@ -39,7 +39,7 @@ func (a3s_GrpcServer *A3S_GrpcServerStruct) UpdateUsersAuthorizationSignature(ct
 	a3SServerObject.logger.WithFields(logrus.Fields{
 		"id":            "8ba74bad-a3c9-4018-b0c3-d26593d30f9f",
 		"returnMessage": returnMessage,
-	}).Debug("Leaveing 'UpdateUsersAuthorizationKey'")
+	}).Debug("Leaving 'UpdateUsersAuthorizationKey'")
 
 	return returnMessage, nil
 
@@ -96,7 +96,7 @@ func (a3s_GrpcServer *A3S_GrpcServerStruct) GetUserAggregatedSignature(ctx conte
 	a3SServerObject.logger.WithFields(logrus.Fields{
 		"id":            "6bdc7a0a-88cc-402c-9ddb-af59d7a300b1",
 		"returnMessage": returnMessage,
-	}).Debug("Leaveing 'GetUserAggregatedSignature'")
+	}).Debug("Leaving 'GetUserAggregatedSignature'")
 
 	return returnMessage, nil
 
@@ -127,7 +127,7 @@ func (a3s_GrpcServer *A3S_GrpcServerStruct) ShutDownA3SServer(ctx context.Contex
 	a3SServerObject.logger.WithFields(logrus.Fields{
 		"id":            "9fe67ea7-c903-42de-8029-7811aa8a0a12",
 		"returnMessage": returnMessage,
-	}).Debug("Leaveing 'ShutDownA3SServer'")
+	}).Debug("Leaving 'ShutDownA3SServer'")
 
 	// Start shut shutdown after leaving this method
 	defer func() {
