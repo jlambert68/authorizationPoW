@@ -105,13 +105,11 @@ message AccountType {
 // Request message listing users authorized companies
 message UserAuthorizedCompaniesRequest {
     string userId = 1; //User id for the user  doing requests
-    string companyId = 2; // The Company the user is connected to
 }
 
 // Response message listing users authorized companies
 message UserAuthorizedCompaniesResponse {
     string userId = 1; //User id for the user  doing requests
-    string companyId = 2; // The Company the user is connected to
     bool acknack = 3; // True=Ack, False=Nack
     string comments = 4; // Comments if needed
     repeated Company companies = 5; // Company that the user has access to

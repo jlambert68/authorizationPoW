@@ -1,6 +1,7 @@
 package userAuthorizationEngine
 
 import (
+	"database/sql"
 	"github.com/patrickmn/go-cache"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
@@ -16,7 +17,10 @@ import (
 /****************************************************/
 // userAuthorizationEngine Server object hodling "some" information
 type userAuthorizationEngineServerObjectStruct struct {
-	logger *logrus.Logger
+	logger       *logrus.Logger
+	databaseName string
+	sqlFile      string
+	sqlDbObject  *sql.DB
 }
 
 var userAuthorizationEngineServerObject *userAuthorizationEngineServerObjectStruct
@@ -79,7 +83,12 @@ func userAuthorizationEngineServerMain() {
 	databaseMemoryCache = cache.New(5*time.Minute, 10*time.Minute)
 
 	// Set up userAuthorizationEngine-Object
-	userAuthorizationEngineServerObject = &userAuthorizationEngineServerObjectStruct{}
+	userAuthorizationEngineServerObject = &userAuthorizationEngineServerObjectStruct{
+		databaseName: "./Database/UserAuthorizationDB.db",
+		sqlFile:      "./Database/UserAuthorizationDB.db - 201228.sql",
+	}
+
+	// Initiate logger
 	userAuthorizationEngineServerObject.InitLogger("")
 
 	// Clean up when leaving. Is placed after logger because shutdown logs information

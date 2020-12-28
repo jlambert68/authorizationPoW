@@ -2,16 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="75189c07-eedc-4f6e-a92c-95c2887109f9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Database/UserAuthorizationDB.db - 201228.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_sql_api.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Database/CustomerAccountsDB.db" beforeDir="false" afterPath="$PROJECT_DIR$/Database/CustomerAccountsDB.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Database/UserAuthorizationDB.db" beforeDir="false" afterPath="$PROJECT_DIR$/Database/UserAuthorizationDB.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/grpc_api/userAuthorizationEngine_grpc_api/userAuthorizationEngine_grpc_api.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/grpc_api/userAuthorizationEngine_grpc_api/userAuthorizationEngine_grpc_api.pb.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/grpc_api/userAuthorizationEngine_grpc_api/userAuthorizationEngine_grpc_api.proto" beforeDir="false" afterPath="$PROJECT_DIR$/grpc_api/userAuthorizationEngine_grpc_api/userAuthorizationEngine_grpc_api.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc_api/userRequests_grpc_api/userRequests_grpc_api.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/grpc_api/userRequests_grpc_api/userRequests_grpc_api.pb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc_api/userRequests_grpc_api/userRequests_grpc_api.proto" beforeDir="false" afterPath="$PROJECT_DIR$/grpc_api/userRequests_grpc_api/userRequests_grpc_api.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_grpc_api.go" beforeDir="false" afterPath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_grpc_api.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userRequestsEngine/userRequestsEngine_grpc_api.go" beforeDir="false" afterPath="$PROJECT_DIR$/userRequestsEngine/userRequestsEngine_grpc_api.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userRequestsEngine/userRequestsEngine_server.go" beforeDir="false" afterPath="$PROJECT_DIR$/userRequestsEngine/userRequestsEngine_server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userRequestsEngine/userRequestsEngine_sql_api.go" beforeDir="false" afterPath="$PROJECT_DIR$/userRequestsEngine/userRequestsEngine_sql_api.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_server.go" beforeDir="false" afterPath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_server.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +138,8 @@
     <MESSAGE value="Basic framwork for gRPC-calls for UserRequests working" />
     <MESSAGE value="Basic framwork for gRPC-calls for userAuthorizationEngine working" />
     <MESSAGE value="userRequestEngine ~50% finished" />
-    <option name="LAST_COMMIT_MESSAGE" value="userRequestEngine ~50% finished" />
+    <MESSAGE value="userRequestEngine ~75% finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="userRequestEngine ~75% finished" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

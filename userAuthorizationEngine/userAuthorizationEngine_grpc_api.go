@@ -96,25 +96,24 @@ func (userAuthorizationEngine_GrpcServer *userAuthorizationEngine_GrpcServerStru
 func (userAuthorizationEngine_GrpcServer *userAuthorizationEngine_GrpcServerStruct) ListUsersAuthorizedCompanies(ctx context.Context, userAuthorizedCompaniesRequest *userAuthorizationEngine_grpc_api.UserAuthorizedCompaniesRequest) (*userAuthorizationEngine_grpc_api.UserAuthorizedCompaniesResponse, error) {
 
 	userAuthorizationEngineServerObject.logger.WithFields(logrus.Fields{
-		"id": "b5499021-238f-4880-b53c-e91a9c119837",
-	}).Debug("Incoming 'ListUsersAuthorizedAccountTypes'")
+		"id": "6759e53e-61b1-4825-89c8-e59647a942a2",
+	}).Debug("Incoming 'ListUsersAuthorizedCompanies'")
 
 	//
-	var returnMessage *userAuthorizationEngine_grpc_api.UserAuthorizedAccountTypesResponse
+	var returnMessage *userAuthorizationEngine_grpc_api.UserAuthorizedCompaniesResponse
 
 	// Create return message
-	returnMessage = &userAuthorizationEngine_grpc_api.UserAuthorizedAccountTypesResponse{
-		UserId:       userAuthorizedAccountTypesRequest.UserId,
-		CompanyId:    userAuthorizedAccountTypesRequest.CompanyId,
-		Acknack:      false,
-		Comments:     "",
-		AccountTypes: nil,
+	returnMessage = &userAuthorizationEngine_grpc_api.UserAuthorizedCompaniesResponse{
+		UserId:    userAuthorizedCompaniesRequest.UserId,
+		Acknack:   false,
+		Comments:  "",
+		Companies: nil,
 	}
 
 	userAuthorizationEngineServerObject.logger.WithFields(logrus.Fields{
-		"id":            "29693194-cd45-4f8e-8194-e14ce5a730f6",
+		"id":            "90670e25-fd43-4f0a-8c92-3428a1c9298c",
 		"returnMessage": returnMessage,
-	}).Debug("Leaveing 'ListUsersAuthorizedAccountTypes'")
+	}).Debug("Leaveing 'ListUsersAuthorizedCompanies'")
 
 	return returnMessage, nil
 
