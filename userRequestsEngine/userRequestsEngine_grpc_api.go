@@ -19,6 +19,26 @@ func (userRequests_GrpcServer *userRequests_GrpcServerStruct) ListAccounts(ctx c
 	var returnMessage *userRequests_grpc_api.ListAccountsResponse
 
 	// TODO Check if user should have access to this function has access to
+	// Generate list of authorized accounts for user
+	userAuthorizedAccountsRequest := userAuthorizationEngine_grpc_api.UserAuthorizedAccountsRequest{
+		UserId:    listAccountsRequest.UserId,
+		CompanyId: listAccountsRequest.CompanyId,
+	}
+	usersAccounts := userRequestsServerObject.getUserAuthorizedAccounts(userAuthorizedAccountsRequest)
+
+	// Generate list of authorized accounts for user
+	userAuthorizedAccountTypesRequest := userAuthorizationEngine_grpc_api.UserAuthorizedAccountTypesRequest{
+		UserId:    listAccountsRequest.UserId,
+		CompanyId: listAccountsRequest.CompanyId,
+	}
+	usersAccountTypes := userRequestsServerObject.getUserAuthorizedAccountTypes(userAuthorizedAccountTypesRequest)
+
+	// Generate list of authorized companies for user
+	userAuthorizedCompaniesRequest := userAuthorizationEngine_grpc_api.UserAuthorizedCompaniesRequest{
+		UserId: listAccountsRequest.UserId,
+	}
+	usersCompanies := userRequestsServerObject.getUserAuthorizedCompanies(userAuthorizedCompaniesRequest)
+
 	hasUserAccesToThisFunction := true
 
 	if hasUserAccesToThisFunction == false {
@@ -35,12 +55,6 @@ func (userRequests_GrpcServer *userRequests_GrpcServerStruct) ListAccounts(ctx c
 
 	} else {
 		// User has access to function
-		// Generate list of authorized accounts for user
-		userAuthorizedAccountsRequest := userAuthorizationEngine_grpc_api.UserAuthorizedAccountsRequest{
-			UserId:    listAccountsRequest.UserId,
-			CompanyId: listAccountsRequest.CompanyId,
-		}
-		usersAccounts := userRequestsServerObject.getUserAuthorizedAccounts(userAuthorizedAccountsRequest)
 
 		//usersAccounts := []string{"283592388-31", "12412412-31"}
 

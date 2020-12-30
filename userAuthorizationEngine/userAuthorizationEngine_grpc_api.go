@@ -3,6 +3,7 @@ package userAuthorizationEngine
 import (
 	"context"
 	"github.com/sirupsen/logrus"
+	"jlambert/authorizationPoW/grpc_api/secretMessageGenerator_grpc_api"
 	"jlambert/authorizationPoW/grpc_api/userAuthorizationEngine_grpc_api"
 )
 
@@ -10,12 +11,107 @@ import (
 // Do a user have the correct rights to execute a specific API
 func (userAuthorizationEngine_GrpcServer *userAuthorizationEngine_GrpcServerStruct) IsUserAuthorized(ctx context.Context, userAuthorizationRequest *userAuthorizationEngine_grpc_api.UserAuthorizationRequest) (*userAuthorizationEngine_grpc_api.UserAuthorizationResponse, error) {
 
+	var returnMessage *userAuthorizationEngine_grpc_api.UserAuthorizationResponse
+
 	userAuthorizationEngineServerObject.logger.WithFields(logrus.Fields{
 		"id": "85799f31-71b1-4c0e-9693-81fedd56bd41",
 	}).Debug("Incoming 'UserAuthorization'")
 
-	//
-	var returnMessage *userAuthorizationEngine_grpc_api.UserAuthorizationResponse
+	// Get users authorized accounts
+	userAuthorizedAccountsRequest := &userAuthorizationEngine_grpc_api.UserAuthorizedAccountsRequest{
+		UserId:    userAuthorizationRequest.UserId,
+		CompanyId: userAuthorizationRequest.CompanyId,
+	}
+	userAuthorizedAccountsResponse := userAuthorizationEngineServerObject.sqlListUsersAuthorizedAccounts(userAuthorizedAccountsRequest)
+
+	// Create return message, and exit, telling that there were no success in reading database
+	if userAuthorizedAccountsResponse.Acknack == false {
+		returnMessage = &userAuthorizationEngine_grpc_api.UserAuthorizationResponse{
+			UserIsAllowedToExecuteCallingApi: false,
+			Acknack:                          false,
+			Comments:                         userAuthorizedAccountsResponse.Comments,
+		}
+	} else {
+
+		// Get users authorized account types
+		userAuthorizedAccountTypesRequest := &userAuthorizationEngine_grpc_api.UserAuthorizedAccountTypesRequest{
+			UserId:    userAuthorizationRequest.UserId,
+			CompanyId: userAuthorizationRequest.CompanyId,
+		}
+		userAuthorizedAccountTypesResponse := userAuthorizationEngineServerObject.sqlListUsersAuthorizedAccountTypes(userAuthorizedAccountTypesRequest)
+
+		// Create return message, and exit, telling that there were no success in reading database
+		if userAuthorizedAccountTypesResponse.Acknack == false {
+			returnMessage = &userAuthorizationEngine_grpc_api.UserAuthorizationResponse{
+				UserIsAllowedToExecuteCallingApi: false,
+				Acknack:                          false,
+				Comments:                         userAuthorizedAccountTypesResponse.Comments,
+			}
+		} else {
+
+			// Get users authorized companies
+			userAuthorizedCompaniesRequest := &userAuthorizationEngine_grpc_api.UserAuthorizedCompaniesRequest{
+				UserId: userAuthorizationRequest.UserId,
+			}
+			userAuthorizedCompaniesResponse := userAuthorizationEngineServerObject.sqlListUsersAuthorizedCompanies(userAuthorizedCompaniesRequest)
+
+			// Create return message, and exit, telling that there were no success in reading database
+			if userAuthorizedCompaniesResponse.Acknack == false {
+				returnMessage = &userAuthorizationEngine_grpc_api.UserAuthorizationResponse{
+					UserIsAllowedToExecuteCallingApi: false,
+					Acknack:                          false,
+					Comments:                         userAuthorizedCompaniesResponse.Comments,
+				}
+
+			} else {
+				// OK and all authorized data was retrieved
+
+				// Concatenate and remove duplicate data
+				userAuthorizedAccountsResponse := userAuthorizedAccountsResponse.GetAccounts()
+				userAuthorizedAccountTypesResponse := userAuthorizedAccountTypesResponse.GetAccountTypes()
+				userAuthorizedCompaniesResponse := userAuthorizedCompaniesResponse.GetCompanies()
+				combinationInputAndAuthorizationData := &combinationInputAndAuthorizationStruct{
+					userId:                    userAuthorizationRequest.UserId,
+					company:                   userAuthorizationRequest.CompanyId,
+					CallingAPI:                userAuthorizationRequest.CallingApi,
+					userInputAccouts:          userAuthorizationRequest.Accounts,
+					userInputAccoutTypes:      userAuthorizationRequest.AccountTypes,
+					userInputCompanies:        userAuthorizationRequest.Companies,
+					userAuthorizedAccouts:     userAuthorizedAccountsResponse,
+					userAuthorizedAccoutTypes: userAuthorizedAccountTypesResponse,
+					userAuthorizedCompanies:   userAuthorizedCompaniesResponse,
+				}
+
+				userAuthorizationEngineServerObject.logger.WithFields(logrus.Fields{
+					"id":                                   "8c39c5bb-3917-4198-b7af-ccae6f54bfee",
+					"combinationInputAndAuthorizationData": combinationInputAndAuthorizationData,
+				}).Debug("Concatenate and remove duplicates for accounts, accountTypes and companies")
+
+				concatenatedAccounts, concatenatedAccountTypes, concatenateCompanies := userAuthorizationEngineServerObject.combineUserInputWithAuthorizedData(*combinationInputAndAuthorizationData)
+
+				userAuthorizationEngineServerObject.logger.WithFields(logrus.Fields{
+					"id":                       "d26204c5-b284-4b00-b705-bdcd05041d6a",
+					"concatenatedAccounts":     concatenatedAccounts,
+					"concatenatedAccountTypes": concatenatedAccountTypes,
+					"concatenateCompanies":     concatenateCompanies,
+				}).Debug("Done with Concatenate and remove duplicates for accounts, accountTypes and companies")
+
+				// Generate Secret from concatenated data
+				generateSecretFromInputRequest := &secretMessageGenerator_grpc_api.GenerateSecretFromInputRequest{
+					UserId:       userAuthorizationRequest.UserId,
+					Company:      userAuthorizationRequest.CompanyId,
+					Accounts:     concatenatedAccounts,
+					AccountTypes: concatenatedAccountTypes,
+					Companies:    concatenateCompanies,
+				}
+				getSecretFromUserDataResponse := userAuthorizationEngineServerObject.getSecretFromUserData(generateSecretFromInputRequest)
+
+				//Do a cryptographic validation of generated secret
+				// TODO XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+			}
+		}
+	}
 
 	// Create return message
 	returnMessage = &userAuthorizationEngine_grpc_api.UserAuthorizationResponse{

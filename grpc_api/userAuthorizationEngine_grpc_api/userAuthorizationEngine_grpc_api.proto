@@ -45,9 +45,11 @@ service userAuthorizationGrpcService {
 message UserAuthorizationRequest {
     string userId = 1; //User id for the user  doing requests
     string companyId = 2; // The Company the user is connected to
-    string callingApi = 3; // Which API did the user call
-    string account = 4; // If account was in request then place it here
-    string accountType = 5; // If account was in request then place it here
+    int32 callingApi = 3; // Which API did the user call
+    repeated Account accounts = 4; // List of accounts that comes from users request
+    repeated AccountType accountTypes = 5; // List of accounts types that comes from users request
+    repeated Company companies = 6; // List of companies that comes from users request
+
 }
 
 // Response message from Boolean Rule Engine

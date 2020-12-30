@@ -30,3 +30,14 @@ const UserAuthorizationServer_port = ":6004"
 //const LoggingLevel = logrus.DebugLevel
 //const LoggingLevel = logrus.InfoLevel
 const LoggingLevel = logrus.DebugLevel // InfoLevel
+
+// Constants for CallingAPI
+const (
+	CallingApiListAccounts int32 = iota
+	CallingApiListAccountsBaseOnProvidedType
+	CallingApiAddAccount
+	CallingApiDeleteAccount
+	CallingApiAddAccountType
+	CallingApiDeleteAccountType
+	CallingApiUpdateCompanyInformation
+)

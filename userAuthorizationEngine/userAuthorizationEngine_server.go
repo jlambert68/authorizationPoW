@@ -3,10 +3,12 @@ package userAuthorizationEngine
 import (
 	"database/sql"
 	"fmt"
+	"github.com/campoy/unique"
 	"github.com/patrickmn/go-cache"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"jlambert/authorizationPoW/common_config"
+	"jlambert/authorizationPoW/grpc_api/secretMessageGenerator_grpc_api"
 	"jlambert/authorizationPoW/grpc_api/userAuthorizationEngine_grpc_api"
 	"log"
 	"net"
@@ -50,6 +52,10 @@ var (
 	XxxGrpcServer_address_to_dial string = common_config.XxxxServer_address + common_config.XxxxServer_port
 )
 */
+
+var (
+	remoteGrpcSecretMessageGeneratorServerConnection *grpc.ClientConn
+)
 
 /****************************************************/
 // Database cache object
@@ -224,4 +230,110 @@ func getCurrentDirectory() string {
 	fmt.Println("Current Directory Name: ", currentDirName)
 
 	return currentDirName
+}
+
+/*******************************************************************/
+// Combine users input Accounts, AccountTypes & Companies with Users Authorized Accounts, AccountTypes & Companies
+// Used for validating that user has the right to use that input data
+
+type combinationInputAndAuthorizationStruct struct {
+	userId                    string
+	company                   string
+	CallingAPI                int32
+	userInputAccouts          []*userAuthorizationEngine_grpc_api.Account
+	userInputAccoutTypes      []*userAuthorizationEngine_grpc_api.AccountType
+	userInputCompanies        []*userAuthorizationEngine_grpc_api.Company
+	userAuthorizedAccouts     []*userAuthorizationEngine_grpc_api.Account
+	userAuthorizedAccoutTypes []*userAuthorizationEngine_grpc_api.AccountType
+	userAuthorizedCompanies   []*userAuthorizationEngine_grpc_api.Company
+}
+
+func mystrings(vs ...string) *[]string { return &vs }
+func lessString(v interface{}) func(i, j int) bool {
+	s := *v.(*[]string)
+	return func(i, j int) bool { return s[i] < s[j] }
+}
+
+/*
+func lessAccounts(v interface{}) func(i, j int) bool {
+	s := *v.(*[]userAuthorizationEngine_grpc_api.Account)
+	return func(i, j int) bool {
+		return s[i] < s[j]
+	}
+}
+*/
+
+func (userAuthorizationEngineServerObject *userAuthorizationEngineServerObjectStruct) combineUserInputWithAuthorizedData(combinationInputAndAuthorization combinationInputAndAuthorizationStruct) ([]*secretMessageGenerator_grpc_api.Account, []*secretMessageGenerator_grpc_api.AccountType, []*secretMessageGenerator_grpc_api.Company) {
+
+	//var err error
+
+	//s := []int{3, 5, 1, 7, 2, 3, 7, 5, 2}
+	//less := func(i, j int) bool { return s[i] < s[j] }
+	//unique.Slice(&s, less)
+
+	//s := combinationInputAndAuthorization.userInputAccouts
+	s := mystrings("one", "two", "three", "two", "one")
+
+	//unique.Slice(&s, lessString)
+	unique.Slice(s, lessString(s))
+	var concatenatedAccounts []string
+	var concatenatedAccountTypes []string
+	var concatenateCompanies []string
+
+	// extract accounts and concatenate into []string
+	for _, tempAccount := range combinationInputAndAuthorization.userAuthorizedAccouts {
+		concatenatedAccounts = append(concatenatedAccounts, tempAccount.GetAccount())
+	}
+	for _, tempAccount := range combinationInputAndAuthorization.userInputAccouts {
+		concatenatedAccounts = append(concatenatedAccounts, tempAccount.GetAccount())
+	}
+	// Sort accounts and remove duplicates regading accounts
+	unique.Slice(concatenatedAccounts, lessString(concatenatedAccounts))
+
+	// extract account types and concatenate into []string
+	for _, tempAccountType := range combinationInputAndAuthorization.userAuthorizedAccoutTypes {
+		concatenatedAccountTypes = append(concatenatedAccountTypes, tempAccountType.GetAccountType())
+	}
+	for _, tempAccountType := range combinationInputAndAuthorization.userInputAccoutTypes {
+		concatenatedAccountTypes = append(concatenatedAccountTypes, tempAccountType.GetAccountType())
+	}
+	// Sort accounts and remove duplicates regarding account types
+	unique.Slice(concatenatedAccountTypes, lessString(concatenatedAccountTypes))
+
+	// extract companies and concatenate into []string
+	for _, tempCompany := range combinationInputAndAuthorization.userAuthorizedCompanies {
+		concatenateCompanies = append(concatenateCompanies, tempCompany.GetCompany())
+	}
+	for _, tempCompany := range combinationInputAndAuthorization.userInputCompanies {
+		concatenateCompanies = append(concatenateCompanies, tempCompany.GetCompany())
+	}
+	// Sort accounts and remove duplicates regarding companies
+	unique.Slice(concatenateCompanies, lessString(concatenateCompanies))
+
+	// Convert type for Account
+	var concatenatedAccountsResponse []*secretMessageGenerator_grpc_api.Account
+	for _, tempAccount := range concatenatedAccounts {
+		concatenatedAccountsResponse = append(concatenatedAccountsResponse, &secretMessageGenerator_grpc_api.Account{
+			Account: tempAccount,
+		})
+	}
+
+	// Convert type for AccountType
+	var concatenatedAccountTypesResponse []*secretMessageGenerator_grpc_api.AccountType
+	for _, tempAccountType := range concatenatedAccountTypes {
+		concatenatedAccountTypesResponse = append(concatenatedAccountTypesResponse, &secretMessageGenerator_grpc_api.AccountType{
+			AccountType: tempAccountType,
+		})
+	}
+
+	// Convert type for Company
+	var concatenateCompaniesResponse []*secretMessageGenerator_grpc_api.Company
+	for _, tempCompany := range concatenatedAccountTypes {
+		concatenateCompaniesResponse = append(concatenateCompaniesResponse, &secretMessageGenerator_grpc_api.Company{
+			Company: tempCompany,
+		})
+	}
+
+	return concatenatedAccountsResponse, concatenatedAccountTypesResponse, concatenateCompaniesResponse
+
 }
