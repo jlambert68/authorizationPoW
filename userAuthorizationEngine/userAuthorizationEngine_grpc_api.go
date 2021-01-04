@@ -107,7 +107,14 @@ func (userAuthorizationEngine_GrpcServer *userAuthorizationEngine_GrpcServerStru
 				getSecretFromUserDataResponse := userAuthorizationEngineServerObject.getSecretFromUserData(generateSecretFromInputRequest)
 
 				//Do a cryptographic validation of generated secret
-				// TODO XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+				verifuIfUserSignatureMatchSecretRequest := usersKeysAndUserSceretUsedInValidatingStruct{
+					userId:        "",
+					userSecret:    getSecretFromUserDataResponse.secret, //[32]byte{},
+					allowedRules:  nil,
+					publicKeys:    nil,
+					allPublicKeys: nil,
+				}
+				verifuIfUserSignatureMatchSecretResponse := verifuIfUserSignatureMatchSecret()
 
 			}
 		}

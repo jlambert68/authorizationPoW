@@ -54,7 +54,7 @@ var (
 */
 
 var (
-	remoteGrpcSecretMessageGeneratorServerConnection *grpc.ClientConn
+	remoteGrpcSA3sSimulatorEngineServerConnection *grpc.ClientConn
 )
 
 /****************************************************/

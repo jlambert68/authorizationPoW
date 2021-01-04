@@ -34,6 +34,10 @@ service userAuthorizationGrpcService {
     rpc ListUsersAuthorizedCompanies (UserAuthorizedCompaniesRequest) returns (UserAuthorizedCompaniesResponse) {
     }
 
+    // List users authorized rules
+    rpc ListUsersAuthorizedRules (UserAuthorizedRulesRequest) returns (UserAuthorizedRulesResponse) {
+    }
+
     // Shutdown server in a controlled way
     rpc ShutDownUserAuthorizationServer (EmptyParameter) returns (AckNackResponse) {
 
@@ -120,4 +124,23 @@ message UserAuthorizedCompaniesResponse {
 //  Holds the company type that the user has access to
 message Company {
     string company =1; // Company
+}
+
+// *********************************************************************
+// Request message listing users authorized rules
+message UserAuthorizedRulesRequest {
+    string userId = 1; //User id for the user  doing requests
+}
+
+// Response message listing users authorized companies
+message UserAuthorizedRulesResponse {
+    string userId = 1; //User id for the user  doing requests
+    bool acknack = 3; // True=Ack, False=Nack
+    string comments = 4; // Comments if needed
+    repeated Rule rules = 5; // Rules that the user has access to
+}
+
+//  Holds the company type that the user has access to
+message Rule {
+    string rule =1; // Rule
 }

@@ -2,6 +2,7 @@ package userAuthorizationEngine
 
 import (
 	"database/sql"
+	"github.com/bford/golang-x-crypto/ed25519"
 	_ "github.com/mattn/go-sqlite3" // Import go-sqlite3 library
 	"github.com/sirupsen/logrus"
 	"io/ioutil"
@@ -199,6 +200,148 @@ func (userAuthorizationServerObject *userAuthorizationEngineServerObjectStruct) 
 	}
 
 	return returnMessage
+}
+
+/****************************************************/
+// List users authorized rules
+func (userAuthorizationServerObject *userAuthorizationEngineServerObjectStruct) sqlListUsersAuthorizedRules(userAuthorizedRulesRequest *userAuthorizationEngine_grpc_api.UserAuthorizedRulesRequest) *userAuthorizationEngine_grpc_api.UserAuthorizedRulesResponse {
+	var err error
+	var returnMessage *userAuthorizationEngine_grpc_api.UserAuthorizedRulesResponse
+
+	// SQl for 'List users authorized accounts'
+	sqlText := "SELECT RuleName "
+	sqlText += "FROM UsersRules "
+	sqlText += "WHERE "
+	sqlText += "UserName = '" + userAuthorizedRulesRequest.UserId + "' AND "
+	sqlText += "ORDER BY RuleName "
+
+	// Execute a sql quesry
+	sqlResponseRows, err := userAuthorizationServerObject.sqlDbObject.Query(sqlText)
+	if err != nil {
+		userAuthorizationServerObject.logger.WithFields(logrus.Fields{
+			"Id":          "51c10495-c2b1-458a-9770-bf7c11e3a7a1",
+			"err.Error()": err.Error(),
+			"sqlText":     sqlText,
+		}).Warning("Couldn't execute sql-query")
+
+		// Create return message
+		returnMessage = &userAuthorizationEngine_grpc_api.UserAuthorizedRulesResponse{
+			UserId:   userAuthorizedRulesRequest.UserId,
+			Acknack:  false,
+			Comments: "Error While executing SQL",
+			Rules:    nil,
+		}
+		return returnMessage
+
+	} else {
+
+		// Success in executing sqlStatement
+		userAuthorizationServerObject.logger.WithFields(logrus.Fields{
+			"Id":              "2ff0191c-e2fb-4ae9-bb72-6d77e44bf02a",
+			"sqlResponseRows": sqlResponseRows,
+		}).Debug("Success in executing sql for 'List users authorized rules'")
+
+		// Extract data from SQL results and create response object
+		var rulesList []*userAuthorizationEngine_grpc_api.Rule
+		var rule string
+
+		// Iterate and fetch the records from result cursor
+		for sqlResponseRows.Next() {
+			sqlResponseRows.Scan(&rule)
+			convertedRule := &userAuthorizationEngine_grpc_api.Rule{Rule: rule}
+			rulesList = append(rulesList, convertedRule)
+		}
+
+		// Create return message
+		returnMessage = &userAuthorizationEngine_grpc_api.UserAuthorizedRulesResponse{
+			UserId:   userAuthorizedRulesRequest.UserId,
+			Acknack:  true,
+			Comments: "",
+			Rules:    rulesList,
+		}
+	}
+
+	return returnMessage
+}
+
+/****************************************************/
+// List users authorized rules with their public keys
+type ruleWithPublicKeyStruct struct {
+	ruleName  string
+	publicKey ed25519.PublicKey
+}
+type rulesWithPublicKeysStruct struct {
+	userId              string
+	acknack             bool
+	Comments            string
+	rulesWithPublicKeys []ruleWithPublicKeyStruct
+}
+
+func (userAuthorizationServerObject *userAuthorizationEngineServerObjectStruct) sqlListUsersAuthorizedRulesAndPublicKeys(rulesWithPublicKeysRequst string) (rulesWithPublicKeysRepsonse rulesWithPublicKeysStruct) {
+	var err error
+
+	// SQl for 'List users authorized accounts'
+	sqlText := "SELECT RuleName, RulePublicKey "
+	sqlText += "FROM UsersRules "
+	sqlText += "WHERE "
+	sqlText += "UserName = '" + rulesWithPublicKeysRequst + "' AND "
+	sqlText += "ORDER BY RuleName "
+
+	// Execute a sql quesry
+	sqlResponseRows, err := userAuthorizationServerObject.sqlDbObject.Query(sqlText)
+	if err != nil {
+		userAuthorizationServerObject.logger.WithFields(logrus.Fields{
+			"Id":          "04e0ab3a-5145-4f55-875a-7ad1a6421f9c",
+			"err.Error()": err.Error(),
+			"sqlText":     sqlText,
+		}).Warning("Couldn't execute sql-query")
+
+		// Create return message
+		rulesWithPublicKeysRepsonse = rulesWithPublicKeysStruct{
+			userId:              rulesWithPublicKeysRequst,
+			acknack:             false,
+			Comments:            "Error While executing SQL",
+			rulesWithPublicKeys: nil,
+		}
+		return rulesWithPublicKeysRepsonse
+
+	} else {
+
+		// Success in executing sqlStatement
+		userAuthorizationServerObject.logger.WithFields(logrus.Fields{
+			"Id":              "08b4cf70-2cfa-4104-ba22-f22bb933119e",
+			"sqlResponseRows": sqlResponseRows,
+		}).Debug("Success in executing sql for 'List users authorized rules'")
+
+		// Extract data from SQL results and create response object
+		//var rulesList []*userAuthorizationEngine_grpc_api.Rule
+		var rule string
+		var publicKey ed25519.PublicKey
+		var ruleWithPublicKey ruleWithPublicKeyStruct
+		var rulesWithPublicKeys []ruleWithPublicKeyStruct
+
+		// Iterate and fetch the records from result cursor
+		for sqlResponseRows.Next() {
+			sqlResponseRows.Scan(&rule, &publicKey)
+			ruleWithPublicKey = ruleWithPublicKeyStruct{
+				ruleName:  rule,
+				publicKey: publicKey,
+			}
+			rulesWithPublicKeys = append(rulesWithPublicKeys, ruleWithPublicKey)
+		}
+
+		// Create return message
+		rulesWithPublicKeysRepsonse = rulesWithPublicKeysStruct{
+			userId:              rulesWithPublicKeysRequst,
+			acknack:             true,
+			Comments:            "",
+			rulesWithPublicKeys: rulesWithPublicKeys,
+		}
+
+		return rulesWithPublicKeysRepsonse
+
+	}
+
 }
 
 /****************************************************/
