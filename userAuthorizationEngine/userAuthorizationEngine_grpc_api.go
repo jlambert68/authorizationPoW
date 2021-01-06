@@ -106,25 +106,29 @@ func (userAuthorizationEngine_GrpcServer *userAuthorizationEngine_GrpcServerStru
 				}
 				getSecretFromUserDataResponse := userAuthorizationEngineServerObject.getSecretFromUserData(generateSecretFromInputRequest)
 
+				// Get Users Rules and rules Public keys
+				usersAuthorizedRulesAndPublicKeys := userAuthorizationEngineServerObject.sqlListUsersAuthorizedRulesAndPublicKeys(userAuthorizationRequest.UserId)
+
 				//Do a cryptographic validation of generated secret
+				var secretAsByteArray32 [32]byte
+				copy(secretAsByteArray32[:], getSecretFromUserDataResponse.secret)
 				verifuIfUserSignatureMatchSecretRequest := usersKeysAndUserSceretUsedInValidatingStruct{
 					userId:        "",
-					userSecret:    getSecretFromUserDataResponse.secret, //[32]byte{},
-					allowedRules:  nil,
-					publicKeys:    nil,
-					allPublicKeys: nil,
+					userSecret:    secretAsByteArray32, //[32]byte{},
+					allowedRules:  usersAuthorizedRulesAndPublicKeys.ruleNames,
+					publicKeys:    usersAuthorizedRulesAndPublicKeys.publicKeys,
+					allPublicKeys: usersAuthorizedRulesAndPublicKeys.publicKeys,
 				}
-				verifuIfUserSignatureMatchSecretResponse := verifuIfUserSignatureMatchSecret()
+				verifuIfUserSignatureMatchSecretResponse := verifuIfUserSignatureMatchSecret(verifuIfUserSignatureMatchSecretRequest)
 
+				// Create return message
+				returnMessage = &userAuthorizationEngine_grpc_api.UserAuthorizationResponse{
+					UserIsAllowedToExecuteCallingApi: verifuIfUserSignatureMatchSecretResponse,
+					Acknack:                          true,
+					Comments:                         "",
+				}
 			}
 		}
-	}
-
-	// Create return message
-	returnMessage = &userAuthorizationEngine_grpc_api.UserAuthorizationResponse{
-		UserIsAllowedToExecuteCallingApi: true,
-		Acknack:                          true,
-		Comments:                         "",
 	}
 
 	userAuthorizationEngineServerObject.logger.WithFields(logrus.Fields{

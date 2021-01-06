@@ -3,6 +3,7 @@ package userRequestsEngine
 import (
 	"context"
 	"github.com/sirupsen/logrus"
+	"jlambert/authorizationPoW/common_config"
 	"jlambert/authorizationPoW/grpc_api/userAuthorizationEngine_grpc_api"
 	"jlambert/authorizationPoW/grpc_api/userRequests_grpc_api"
 )
@@ -18,30 +19,83 @@ func (userRequests_GrpcServer *userRequests_GrpcServerStruct) ListAccounts(ctx c
 	//
 	var returnMessage *userRequests_grpc_api.ListAccountsResponse
 
-	// TODO Check if user should have access to this function has access to
+	// TODO XXXXXXXXXXXXX Check if user should have access to this function has access to
 	// Generate list of authorized accounts for user
 	userAuthorizedAccountsRequest := userAuthorizationEngine_grpc_api.UserAuthorizedAccountsRequest{
 		UserId:    listAccountsRequest.UserId,
 		CompanyId: listAccountsRequest.CompanyId,
 	}
-	usersAccounts := userRequestsServerObject.getUserAuthorizedAccounts(userAuthorizedAccountsRequest)
+	getUserAuthorizedAccountsResponse := userRequestsServerObject.getUserAuthorizedAccounts(userAuthorizedAccountsRequest)
+	var usersAuthorizedAccounts []userAuthorizationEngine_grpc_api.Account
+	for _, userAccount := range getUserAuthorizedAccountsResponse.Accounts {
+		usersAuthorizedAccounts = append(usersAuthorizedAccounts, userAuthorizationEngine_grpc_api.Account{Account: userAccount.Account})
+	}
 
-	// Generate list of authorized accounts for user
+	// Generate list of authorized account types for user
 	userAuthorizedAccountTypesRequest := userAuthorizationEngine_grpc_api.UserAuthorizedAccountTypesRequest{
 		UserId:    listAccountsRequest.UserId,
 		CompanyId: listAccountsRequest.CompanyId,
 	}
-	usersAccountTypes := userRequestsServerObject.getUserAuthorizedAccountTypes(userAuthorizedAccountTypesRequest)
+	getUserAuthorizedAccountTypesResponse := userRequestsServerObject.getUserAuthorizedAccountTypes(userAuthorizedAccountTypesRequest)
+	var usersAuthorizedAccountTypes []userAuthorizationEngine_grpc_api.AccountType
+	for _, userAccountType := range getUserAuthorizedAccountTypesResponse.AccountTypes {
+		usersAuthorizedAccountTypes = append(usersAuthorizedAccountTypes, userAuthorizationEngine_grpc_api.AccountType{AccountType: userAccountType.AccountType})
+	}
 
 	// Generate list of authorized companies for user
 	userAuthorizedCompaniesRequest := userAuthorizationEngine_grpc_api.UserAuthorizedCompaniesRequest{
 		UserId: listAccountsRequest.UserId,
 	}
-	usersCompanies := userRequestsServerObject.getUserAuthorizedCompanies(userAuthorizedCompaniesRequest)
+	getUserAuthorizedCompaniesResponse := userRequestsServerObject.getUserAuthorizedCompanies(userAuthorizedCompaniesRequest)
+	var usersAuthorizedCompanies []userAuthorizationEngine_grpc_api.Company
+	for _, userCompany := range getUserAuthorizedCompaniesResponse.Companies {
+		usersAuthorizedCompanies = append(usersAuthorizedCompanies, userAuthorizationEngine_grpc_api.Company{Company: userCompany.Company})
+	}
+	// Combine user authorized data with users data from request
+	combinationInputAndAuthorizationRequest := combinationInputAndAuthorizationStruct{
+		userId:                    listAccountsRequest.UserId,
+		company:                   listAccountsRequest.CompanyId,
+		CallingAPI:                common_config.CallingApiListAccounts,
+		userInputAccouts:          nil, // No data from user request
+		userInputAccoutTypes:      nil, // No data from user request
+		userInputCompanies:        nil, // No data from user request
+		userAuthorizedAccouts:     usersAuthorizedAccounts,
+		userAuthorizedAccoutTypes: usersAuthorizedAccountTypes,
+		userAuthorizedCompanies:   usersAuthorizedCompanies,
+	}
+	combineUserInputWithAuthorizedDataResponse := userRequestsServerObject.combineUserInputWithAuthorizedData(combinationInputAndAuthorizationRequest)
 
-	hasUserAccesToThisFunction := true
+	// Convert Accounts, AccountTypes and Companies into correct type
+	// Convert Accounts
+	var usersCombinedAccounts []*userAuthorizationEngine_grpc_api.Account
+	for _, userAccount := range combineUserInputWithAuthorizedDataResponse.userAccouts {
+		usersCombinedAccounts = append(usersCombinedAccounts, &userAuthorizationEngine_grpc_api.Account{Account: userAccount.Account})
+	}
 
-	if hasUserAccesToThisFunction == false {
+	// Convert AccountTypes
+	var usersCombinedAccountTypes []*userAuthorizationEngine_grpc_api.AccountType
+	for _, userAccountType := range combineUserInputWithAuthorizedDataResponse.userAccoutTypes {
+		usersCombinedAccountTypes = append(usersCombinedAccountTypes, &userAuthorizationEngine_grpc_api.AccountType{AccountType: userAccountType.AccountType})
+	}
+
+	// Convert Companies
+	var usersCombinedCompanies []*userAuthorizationEngine_grpc_api.Company
+	for _, userCompany := range combineUserInputWithAuthorizedDataResponse.userCompanies {
+		usersCombinedCompanies = append(usersCombinedCompanies, &userAuthorizationEngine_grpc_api.Company{Company: userCompany.Company})
+	}
+
+	// Do authorization of user
+	isUserAuthorizedToExecuteRequest := userAuthorizationEngine_grpc_api.UserAuthorizationRequest{
+		UserId:       listAccountsRequest.UserId,
+		CompanyId:    listAccountsRequest.CompanyId,
+		CallingApi:   common_config.CallingApiListAccounts,
+		Accounts:     usersCombinedAccounts,
+		AccountTypes: usersCombinedAccountTypes,
+		Companies:    usersCombinedCompanies,
+	}
+	hasUserAccesToThisFunction := userRequestsServerObject.isUserAuthorizedToExecute(&isUserAuthorizedToExecuteRequest)
+
+	if hasUserAccesToThisFunction.Acknack == false {
 		// User hasn't got access to function
 		returnMessage = &userRequests_grpc_api.ListAccountsResponse{
 			UserId:    listAccountsRequest.UserId,
@@ -54,12 +108,22 @@ func (userRequests_GrpcServer *userRequests_GrpcServerStruct) ListAccounts(ctx c
 		return returnMessage, nil
 
 	} else {
-		// User has access to function
+		// User has access to execute function
+		// Execute SQL to get users Account, but in this case only return previously received account list
 
-		//usersAccounts := []string{"283592388-31", "12412412-31"}
+		// Convert Accounts into correct type
+		var sqlResponseAccounts []*userRequests_grpc_api.Account
+		for _, userAccount := range getUserAuthorizedAccountsResponse.Accounts {
+			sqlResponseAccounts = append(sqlResponseAccounts, &userRequests_grpc_api.Account{Account: userAccount.Account})
+		}
 
-		// Create return message based on SQL question
-		returnMessage = userRequestsServerObject.sqlListAccounts(listAccountsRequest, *usersAccounts)
+		returnMessage = &userRequests_grpc_api.ListAccountsResponse{
+			UserId:    listAccountsRequest.UserId,
+			CompanyId: listAccountsRequest.CompanyId,
+			Acknack:   true,
+			Comments:  "",
+			Accounts:  sqlResponseAccounts,
+		}
 
 		userRequestsServerObject.logger.WithFields(logrus.Fields{
 			"id":            "8ba74bad-a3c9-4018-b0c3-d26593d30f9f",

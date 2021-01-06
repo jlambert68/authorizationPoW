@@ -6,13 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="75189c07-eedc-4f6e-a92c-95c2887109f9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc_api/userAuthorizationEngine_grpc_api/userAuthorizationEngine_grpc_api.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/grpc_api/userAuthorizationEngine_grpc_api/userAuthorizationEngine_grpc_api.pb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc_api/userAuthorizationEngine_grpc_api/userAuthorizationEngine_grpc_api.proto" beforeDir="false" afterPath="$PROJECT_DIR$/grpc_api/userAuthorizationEngine_grpc_api/userAuthorizationEngine_grpc_api.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_crypto_api.go" beforeDir="false" afterPath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_crypto_api.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_gRpcClient.go" beforeDir="false" afterPath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_gRpcClient.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_server.go" beforeDir="false" afterPath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_grpc_api.go" beforeDir="false" afterPath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_grpc_api.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_sql_api.go" beforeDir="false" afterPath="$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_sql_api.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userRequestsEngine/userRequestEngine_gRpcClient.go" beforeDir="false" afterPath="$PROJECT_DIR$/userRequestsEngine/userRequestEngine_gRpcClient.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userRequestsEngine/userRequestsEngine_grpc_api.go" beforeDir="false" afterPath="$PROJECT_DIR$/userRequestsEngine/userRequestsEngine_grpc_api.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +142,9 @@
     <MESSAGE value="userAuthorizationEngine has gor SQL to retrieve users authorized accounts, accountTypes and Companies" />
     <MESSAGE value="Get users account working" />
     <MESSAGE value="userAuthorizationEngine ~30% finished" />
-    <option name="LAST_COMMIT_MESSAGE" value="userAuthorizationEngine ~30% finished" />
+    <MESSAGE value="userAuthorizationEngine ~60% finished" />
+    <MESSAGE value="userAuthorizationEngine userRequestEngine ~80% finished before doing first test" />
+    <option name="LAST_COMMIT_MESSAGE" value="userAuthorizationEngine userRequestEngine ~80% finished before doing first test" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -154,7 +154,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_sql_api.go</url>
-          <line>387</line>
+          <line>382</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
@@ -169,17 +169,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/userRequestsEngine/userRequestsEngine_grpc_api.go</url>
-          <line>41</line>
+          <line>95</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_grpc_api.go</url>
-          <line>143</line>
+          <line>155</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/userAuthorizationEngine/userAuthorizationEngine_sql_api.go</url>
-          <line>93</line>
+          <line>90</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">

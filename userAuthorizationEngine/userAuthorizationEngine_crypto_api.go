@@ -104,7 +104,8 @@ func generatePublicAndPrivateKeysForUser(usersRules usersRulesStruct) (returnMes
 		usersKeysReturnMessage.publicKeys = append(usersKeysReturnMessage.publicKeys, allRulesWithKeysAsMap[ruleName].publicKey)
 	}
 
-	// Create an aggregated signature for all rules that users can use.
+	// Create an aggregated signature for all rules that users can use.[Change to only use users own keys as all possible keys]
+	// usersKeysReturnMessage.aggregatedSignatureStoredInA3S = SignMulti(usersKeysReturnMessage.userSecret, usersKeysReturnMessage.publicKeys, usersKeysReturnMessage.privateKeys, usersKeysReturnMessage.allPublicKeys)
 	usersKeysReturnMessage.aggregatedSignatureStoredInA3S = SignMulti(usersKeysReturnMessage.userSecret, usersKeysReturnMessage.publicKeys, usersKeysReturnMessage.privateKeys, usersKeysReturnMessage.allPublicKeys)
 
 	// Store aggregated signature in A3S simulator Engine

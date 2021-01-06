@@ -271,10 +271,11 @@ type ruleWithPublicKeyStruct struct {
 	publicKey ed25519.PublicKey
 }
 type rulesWithPublicKeysStruct struct {
-	userId              string
-	acknack             bool
-	Comments            string
-	rulesWithPublicKeys []ruleWithPublicKeyStruct
+	userId     string
+	acknack    bool
+	Comments   string
+	ruleNames  []string
+	publicKeys []ed25519.PublicKey
 }
 
 func (userAuthorizationServerObject *userAuthorizationEngineServerObjectStruct) sqlListUsersAuthorizedRulesAndPublicKeys(rulesWithPublicKeysRequst string) (rulesWithPublicKeysRepsonse rulesWithPublicKeysStruct) {
@@ -298,10 +299,11 @@ func (userAuthorizationServerObject *userAuthorizationEngineServerObjectStruct) 
 
 		// Create return message
 		rulesWithPublicKeysRepsonse = rulesWithPublicKeysStruct{
-			userId:              rulesWithPublicKeysRequst,
-			acknack:             false,
-			Comments:            "Error While executing SQL",
-			rulesWithPublicKeys: nil,
+			userId:     rulesWithPublicKeysRequst,
+			acknack:    false,
+			Comments:   "Error While executing SQL",
+			ruleNames:  nil,
+			publicKeys: nil,
 		}
 		return rulesWithPublicKeysRepsonse
 
@@ -316,26 +318,24 @@ func (userAuthorizationServerObject *userAuthorizationEngineServerObjectStruct) 
 		// Extract data from SQL results and create response object
 		//var rulesList []*userAuthorizationEngine_grpc_api.Rule
 		var rule string
+		var rules []string
 		var publicKey ed25519.PublicKey
-		var ruleWithPublicKey ruleWithPublicKeyStruct
-		var rulesWithPublicKeys []ruleWithPublicKeyStruct
+		var publicKeys []ed25519.PublicKey
 
 		// Iterate and fetch the records from result cursor
 		for sqlResponseRows.Next() {
 			sqlResponseRows.Scan(&rule, &publicKey)
-			ruleWithPublicKey = ruleWithPublicKeyStruct{
-				ruleName:  rule,
-				publicKey: publicKey,
-			}
-			rulesWithPublicKeys = append(rulesWithPublicKeys, ruleWithPublicKey)
+			rules = append(rules, rule)
+			publicKeys = append(publicKeys, publicKey)
 		}
 
 		// Create return message
 		rulesWithPublicKeysRepsonse = rulesWithPublicKeysStruct{
-			userId:              rulesWithPublicKeysRequst,
-			acknack:             true,
-			Comments:            "",
-			rulesWithPublicKeys: rulesWithPublicKeys,
+			userId:     rulesWithPublicKeysRequst,
+			acknack:    true,
+			Comments:   "",
+			ruleNames:  rules,
+			publicKeys: publicKeys,
 		}
 
 		return rulesWithPublicKeysRepsonse
